@@ -1,0 +1,348 @@
+export const products = [
+  {
+    id: 1,
+    title: "برواز خشب طبيعي 30×40 سم",
+    price: 40,
+    discount: 30,
+    rating: 4.8,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+  {
+    id: 2,
+    title: "لوحة جدارية تصميم مودرن",
+    price: 85,
+    rating: 4.9,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage2.jpg",
+  },
+  {
+    id: 3,
+    title: "إطار خشبي كلاسيكي عريض",
+    price: 60,
+    discount: 20,
+    rating: 4.7,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage3.jpg",
+  },
+  {
+    id: 4,
+    title: "طقم براويز مودرن (3 قطع)",
+    price: 120,
+    rating: 5.0,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+  {
+    id: 5,
+    title: "إطار خشبي كلاسيكي عريض",
+    price: 60,
+    rating: 4.7,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage3.jpg",
+  },
+  {
+    id: 6,
+    title: "طقم براويز مودرن (3 قطع)",
+    price: 120,
+    rating: 5.0,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+  {
+    id: 7,
+    title: "إطار خشبي كلاسيكي عريض",
+    price: 60,
+    rating: 4.7,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage3.jpg",
+  },
+  {
+    id: 8,
+    title: "طقم براويز مودرن (3 قطع)",
+    price: 120,
+    rating: 5.0,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+];
+
+import design1 from "../assets/design-1.jpg";
+import design2 from "../assets/design-2.jpg";
+export const features = [
+  {
+    id: 1,
+    title: "تصميم مخصص باحتراف",
+    description:
+      "نقدم تصاميم فريدة تُنفذ حسب ذوقك واحتياجك، سواء تصميم تفاعلي أو مدعوم بالذكاء الاصطناعي، مع معاينة قبل الاعتماد.",
+    image: design1,
+    position: "left",
+  },
+  {
+    id: 2,
+    title: "خامات عالية الجودة",
+    description:
+      "نستخدم خامات مختارة بعناية (خشب، ألوان، طباعة) لضمان لك منتج نهائي أنيق ويدوم طويلًا.",
+    image: design2,
+    position: "right",
+  },
+];
+
+export const sections = [
+  {
+    id: 1,
+    title: "البراويز الخشبية",
+    subtitle: "200 من المنتجات",
+    description: "براويز ولوحات خشبية جاهزة أو مخصصة لكل الأذواق",
+    date: "2026-1-25",
+    image: "src/assets/sectionImage1.jpg",
+    subsections: [
+      {
+        id: 101,
+        title: "براويز كلاسيكية",
+        products: [
+          {
+            id: 1,
+            title: "لوحة خشبية جاهزة – تصميم هندسي مودرن",
+            description:
+              "لوحة خشبية جاهزة بتصميم هندسي عصري، مصنوعة من خشب طبيعي بعناية لتضيف لمسة دافئة وأنيقة لأي مساحة.",
+            price: 40,
+            discount: 30,
+            rating: 4.8,
+            isAvilable: true,
+            isBestSeller: true,
+            image: "../src/assets/sectionImage1.jpg",
+            someImages: [
+              "../src/assets/sectionImage1.jpg",
+              "../src/assets/sectionImage2.jpg",
+              "../src/assets/sectionImage3.jpg",
+            ],
+            pros: ["خشب طبيعي عالي الجودة", "تصميم مودرن أنيق", "سهل التركيب"],
+            Product_Specifications: [
+              { key: "المقاس", value: "30×40 سم" },
+              { key: "اللون", value: "بني" },
+              { key: "نوع الخشب", value: "خشب طبيعي معالج" },
+            ],
+          },
+          {
+            id: 2,
+            title: "برواز خشب بني كلاسيكي 50×70 سم",
+            price: 85,
+            rating: 4.9,
+            isBestSeller: false,
+            image: "../src/assets/sectionImage2.jpg",
+          },
+          {
+            id: 3,
+            title: "إطار خشبي كلاسيكي عريض",
+            price: 60,
+            discount: 20,
+            rating: 4.7,
+            isBestSeller: true,
+            image: "../src/assets/sectionImage3.jpg",
+          },
+        ],
+      },
+      {
+        id: 102,
+        title: "براويز مودرن",
+        products: [
+          {
+            id: 4,
+            title: "برواز خشب ذهبي فاخر",
+            price: 120,
+            rating: 5.0,
+            isBestSeller: false,
+            image: "../src/assets/sectionImage1.jpg",
+          },
+          {
+            id: 5,
+            title: "برواز خشب أبيض مودرن",
+            price: 55,
+            rating: 4.6,
+            isBestSeller: true,
+            image: "../src/assets/sectionImage3.jpg",
+          },
+          {
+            id: 11,
+            title: "برواز معدني أسود",
+            price: 75,
+            discount: 10,
+            rating: 4.8,
+            isBestSeller: false,
+            image: "../src/assets/sectionImage2.jpg",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "لوحات خشبية جاهزة",
+    subtitle: "200 من المنتجات",
+    description: "براويز ولوحات خشبية جاهزة أو مخصصة لكل الأذواق",
+    date: "2026-1-25",
+    image: "src/assets/sectionImage2.jpg",
+    subsections: [
+      {
+        id: 103,
+        title: "لوحات إسلامية",
+        products: [
+          {
+            id: 7,
+            title: "لوحة خشبية إسلامية",
+            price: 110,
+            discount: 15,
+            rating: 5.0,
+            isBestSeller: true,
+            image: "../src/assets/design-1.jpg",
+          },
+          {
+            id: 8,
+            title: "لوحة خشبية آية قرآنية",
+            price: 130,
+            rating: 4.8,
+            isBestSeller: false,
+            image: "../src/assets/design-2.jpg",
+          },
+          {
+            id: 12,
+            title: "لوحة خشبية أسماء الله الحسنى",
+            price: 150,
+            rating: 4.9,
+            isBestSeller: true,
+            image: "../src/assets/design-1.jpg",
+          },
+        ],
+      },
+      {
+        id: 104,
+        title: "لوحات مودرن",
+        products: [
+          {
+            id: 6,
+            title: "لوحة جدارية تصميم مودرن",
+            price: 95,
+            rating: 4.9,
+            isBestSeller: true,
+            image: "../src/assets/sectionImage2.jpg",
+          },
+          {
+            id: 9,
+            title: "طقم لوحات مودرن (3 قطع)",
+            price: 200,
+            discount: 25,
+            rating: 4.9,
+            isBestSeller: true,
+            image: "../src/assets/sectionImage1.jpg",
+          },
+        ],
+      },
+      {
+        id: 105,
+        title: "لوحات للأطفال",
+        products: [
+          {
+            id: 10,
+            title: "لوحة خشبية للأطفال",
+            price: 75,
+            rating: 4.7,
+            isBestSeller: false,
+            image: "../src/assets/sectionImage3.jpg",
+          },
+          {
+            id: 13,
+            title: "لوحة خشبية حيوانات",
+            price: 65,
+            discount: 15,
+            rating: 4.6,
+            isBestSeller: false,
+            image: "../src/assets/sectionImage1.jpg",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "صمم بنفسك",
+    subtitle: "ابدأ تصميمك الخاص الآن",
+    description: "ابدأ تصميمك الخاص الآن",
+    image: "src/assets/sectionImage3.jpg",
+    isCTA: true,
+    subsections: [],
+  },
+];
+
+export const CART_PRODUCTS = [
+  {
+    id: 1,
+    title: "برواز خشب طبيعي 30×40 سم",
+    size: "40 × 60 سم",
+    price: 40,
+    discount: 30,
+    rating: 4.8,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+  {
+    id: 2,
+    title: "لوحة جدارية تصميم مودرن",
+    size: "40 × 60 سم",
+    price: 85,
+    rating: 4.9,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage2.jpg",
+  },
+  {
+    id: 3,
+    title: "إطار خشبي كلاسيكي عريض",
+    size: "40 × 60 سم",
+    price: 60,
+    discount: 20,
+    rating: 4.7,
+    isBestSeller: true,
+    image: "../src/assets/sectionImage3.jpg",
+  },
+  {
+    id: 4,
+    title: "طقم براويز مودرن (3 قطع)",
+    size: "40 × 60 سم",
+    price: 120,
+    rating: 5.0,
+    isBestSeller: false,
+    image: "../src/assets/sectionImage1.jpg",
+  },
+];
+
+// بيانات تجريبية
+export const ordersData = [
+  {
+    id: 1,
+    orderDate: "25 يناير 2026",
+    orderNumber: "546464",
+    total: "466",
+    shippedTo: "السعودية , الرياض",
+    status: "قيد التنفيذ",
+    statusNumber: 1,
+    deliveryDate: "30 يناير",
+    productName: "لوحة خشبية جاهزة – تصميم هندسي مودرن",
+    productDescription: "يمكنك الإلغاء أو الاستبدال خلال 2 من تاريخ",
+    productImage:
+      "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&h=400&fit=crop",
+  },
+  {
+    id: 2,
+    orderDate: "25 يناير 2026",
+    orderNumber: "546464",
+    total: "466",
+    shippedTo: "السعودية , الرياض",
+    status: "يتم العمل على الطلب",
+    statusNumber: 2,
+    deliveryDate: "30 يناير",
+    productName: "لوحة خشبية جاهزة – تصميم هندسي مودرن",
+    productDescription: "يمكنك الإلغاء أو الاستبدال خلال 2 من تاريخ",
+    productImage:
+      "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&h=400&fit=crop",
+  },
+];

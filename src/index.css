@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #DFBC34;
+  --color-secondary: #231F20;
+  --color-background: #FFFDF5;
+  --color-light-gray: #C5C5C5;
+  --color-dark-gray: #676767;
+  --color-text-black: #2B2B2B;
+  --color-white: #F9F9F9;
+  --color-light-beige: #F5F1E8;
+  --font-noto: "Noto Nastaliq Urdu", serif;
+    --font-cairo: "Cairo", sans-serif;
+}
+:root {
+  font-family:
+    var(--font-cairo), system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--color-text-black);
+  background-color: var(--color-background);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Regular */
+@font-face {
+  font-family: "Noto Nastaliq Urdu";
+  src: url("./assets/fonts/NotoNastaliqUrdu-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medium */
+@font-face {
+  font-family: "Noto Nastaliq Urdu";
+  src: url("./assets/fonts/NotoNastaliqUrdu-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SemiBold */
+@font-face {
+  font-family: "Noto Nastaliq Urdu";
+  src: url("./assets/fonts/NotoNastaliqUrdu-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold */
+@font-face {
+  font-family: "Noto Nastaliq Urdu";
+  src: url("./assets/fonts/NotoNastaliqUrdu-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo Regular */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo Medium */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo SemiBold */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo Bold */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo Black (الوزن الأثقل) */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo Light & ExtraLight */
+@font-face {
+  font-family: "Cairo";
+  src: url("./assets/fonts/Cairo-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* لجعل الـ Select يشبه الصورة بالضبط */
+.custom-filter-select .ant-select-selector {
+    border-color: #f0f0f0 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+}
+
+.custom-filter-select:hover .ant-select-selector {
+  border-color: #DFBC34 !important;
+}
+
+/* لإخفاء الـ scrollbar لو الفلاتر كتير على الموبايل */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* FormSelect Custom Styling - Design Page */
+.design-form-select .ant-select-selector {
+  border-color: #DFBC34 !important;
+    border-width: 1px !important;
+}
+
+.design-form-select:hover .ant-select-selector,
+.design-form-select.ant-select-focused .ant-select-selector {
+  border-color: #DFBC34 !important;
+    box-shadow: 0 0 0 2px rgba(223, 188, 52, 0.1) !important;
+}
+
+/* Option hover color */
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: rgba(223, 188, 52, 0.1) !important;
+}
+
+.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    background-color: rgba(223, 188, 52, 0.2) !important;
+    color: #DFBC34 !important;
+    font-weight: 600;
+}
+
+
+
+
+/* hide default antd radio spacing */
+.radio-custom .ant-radio {
+  transform: scale(1.1) !important;
+}
+
+.ant-radio-checked .ant-radio-inner {
+  border-color: #DFBC34 !important;
+  background-color: #DFBC34 !important;
+}
+
+.ant-radio-inner::after {
+  background-color: #fff !important;
+}
+
+
+/* Custom Scrollbar with Secondary Color */
+.scrollbar-secondary::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-secondary::-webkit-scrollbar-track {
+  background: rgba(223, 188, 52, 0.1);
+  border-radius: 10px;
+}
+
+.scrollbar-secondary::-webkit-scrollbar-thumb {
+  background: #DFBC34;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.scrollbar-secondary::-webkit-scrollbar-thumb:hover {
+  background: #C8A62E;
+}
+
+/* Firefox scrollbar */
+.scrollbar-secondary {
+  scrollbar-width: thin;
+  scrollbar-color: #DFBC34 rgba(223, 188, 52, 0.1);
+}
+
+/* Custom Tracking Steps Styling */
+.custom-tracking-steps .ant-steps-item-finish .ant-steps-item-icon {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.custom-tracking-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #DFBC34;
+}
+
+.custom-tracking-steps .ant-steps-item-process .ant-steps-item-icon {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.custom-tracking-steps .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+  color: #DFBC34;
+}
+
+.custom-tracking-steps .ant-steps-item-wait .ant-steps-item-icon {
+  background-color: transparent;
+  border-color: #C5C5C5;
+}
+
+.custom-tracking-steps .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: #DFBC34;
+}
+
+.custom-tracking-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: #C5C5C5;
+}
+
+.custom-tracking-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: #C5C5C5;
+}
+
+.custom-tracking-steps .ant-steps-item-title {
+  font-family: var(--font-cairo);
+  color: var(--color-text-black);
+}
+
+.custom-tracking-steps .ant-steps-item-wait .ant-steps-item-title {
+  color: var(--color-light-gray);
+}
