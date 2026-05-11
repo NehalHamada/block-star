@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import footerImage from "../assets/footerImage.png";
-import commercial from "/commercial.png";
-import tax from "/tax.png";
-import address from "/address.png";
 import { Button } from "./ui";
 import {
   FaFacebookF,
@@ -51,10 +48,10 @@ export function Footer() {
     { label: t("nav.about"), path: "/about" },
   ];
 
-  const images = [
-    { src: commercial, text: "Commercial Details" },
-    { src: tax, text: "Tax Info" },
-    { src: address, text: "Address Details" },
+  const text = [
+    { name: t("footer.CommercialDetails"), num: "7029305591" },
+    { name: t("footer.TaxInfo"), num: "311357273700003" },
+    { name: t("footer.AddressDetails"), num: "31324402819" },
   ];
 
   return (
@@ -144,15 +141,12 @@ export function Footer() {
               </div>
 
               <div>
-                <div className="flex mt-10">
-                  {images.map((img, index) => (
-                    <img
-                      key={index}
-                      src={img.src}
-                      alt=""
-                      className="w-20 h-10 rounded-full m-3 cursor-pointer hover:scale-105 transition"
-                      onClick={() => setSelectedImage(img.src)}
-                    />
+                <div className="mt-10">
+                  {text.map((item, index) => (
+                    <div key={index} className="text-white/55 mt-4">
+                      <span>{item.name}: </span>
+                      <span> {item.num}</span>
+                    </div>
                   ))}
                 </div>
                 {selectedImage && (

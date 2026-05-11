@@ -26,6 +26,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
+const cleanApiText = (value) => value?.replace(/[\[\]]/g, "").trim();
+
 export function Home() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -267,12 +269,16 @@ export function Home() {
             <div className="absolute inset-0 bg-black/50"></div>
             <div className="absolute inset-0 flex items-center justify-center flex-col gap-8 px-4 text-center z-10">
               <h1 className="text-3xl font-noto text-white leading-tight max-w-3xl">
-                {isRTL ? homeCard?.data?.title_ar : homeCard?.data?.title_en}
+                {cleanApiText(
+                  isRTL ? homeCard?.data?.title_ar : homeCard?.data?.title_en,
+                )}
               </h1>
               <p className="text-white/90 text-lg md:text-xl  max-w-2xl">
-                {isRTL
-                  ? homeCard?.data?.description_ar
-                  : homeCard?.data?.description_en}
+                {cleanApiText(
+                  isRTL
+                    ? homeCard?.data?.description_ar
+                    : homeCard?.data?.description_en,
+                )}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mt-4">
@@ -288,7 +294,7 @@ export function Home() {
                   className="  px-8 py-3 rounded-md "
                   onClick={() => navigate("/studio")}>
                   {isRTL
-                    ? homeCard?.data?.buttons[1].text_ar
+                    ? "\u0635\u0645\u0645 \u0628\u0646\u0641\u0633\u0643"
                     : homeCard?.data?.buttons[1].text_en}
                 </Button>
               </div>

@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "../../api/axiosInstance.js";
 import { FaFacebook } from "react-icons/fa";
+import { startSocialLogin } from "../../utils/socialAuth.js";
 
 export function LoginForm() {
   const { t, i18n } = useTranslation();
@@ -74,11 +74,7 @@ export function LoginForm() {
 
   const handleGoogleLogin = async () => {
     try {
-      const { data } = await axiosInstance.get("/auth/google/redirect");
-
-      if (data.success) {
-        window.location.href = data.data.url;
-      }
+      await startSocialLogin("/auth/google/redirect");
     } catch (error) {
       console.error("Google login error:", error);
     }
@@ -86,10 +82,7 @@ export function LoginForm() {
 
   const handleFacebookLogin = async () => {
     try {
-      const { data } = await axiosInstance.get("/auth/facebook/redirect");
-      if (data.success) {
-        window.location.href = data.data.url;
-      }
+      await startSocialLogin("/auth/facebook/redirect");
     } catch (error) {
       console.error("Facebook login error:", error);
     }

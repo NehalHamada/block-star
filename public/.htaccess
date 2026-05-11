@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Normalize accidental double slash callbacks from the backend.
+  RewriteCond %{THE_REQUEST} \s//+social-login-success[?\s] [NC]
+  RewriteRule ^/*social-login-success$ /social-login-success [R=302,L]
+
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+ErrorDocument 404 /index.html

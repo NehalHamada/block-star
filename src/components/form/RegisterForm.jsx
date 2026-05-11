@@ -6,7 +6,6 @@ import { Button, Divider, Input } from "../ui";
 import {
   Eye,
   EyeOff,
-  FacebookIcon,
   Lock,
   Mail,
   Phone,
@@ -17,8 +16,8 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "../../api/axiosInstance.js";
 import { FaFacebook } from "react-icons/fa";
+import { startSocialLogin } from "../../utils/socialAuth.js";
 
 export function RegisterForm() {
   const { t } = useTranslation();
@@ -79,11 +78,7 @@ export function RegisterForm() {
 
   const handleGoogleLogin = async () => {
     try {
-      const { data } = await axiosInstance.get("/auth/google/redirect");
-
-      if (data.success) {
-        window.location.href = data.data.url;
-      }
+      await startSocialLogin("/auth/google/redirect");
     } catch (error) {
       console.error("Google login error:", error);
     }
@@ -91,10 +86,7 @@ export function RegisterForm() {
 
   const handleFacebookLogin = async () => {
     try {
-      const { data } = await axiosInstance.get("/auth/facebook/redirect");
-      if (data.success) {
-        window.location.href = data.data.url;
-      }
+      await startSocialLogin("/auth/facebook/redirect");
     } catch (error) {
       console.error("Facebook login error:", error);
     }

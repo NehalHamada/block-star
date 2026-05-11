@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>جار تسجيل الدخول...</title>
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background: #f7f7fb;
+        color: #242128;
+        font-family: Arial, sans-serif;
+      }
+
+      .box {
+        text-align: center;
+        padding: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>جار تسجيل الدخول...</h1>
+      <p>انتظر لحظة من فضلك.</p>
+    </div>
+
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var token = params.get("token");
+
+        if (!token) {
+          window.location.replace("/auth/login");
+          return;
+        }
+
+        try {
+          localStorage.setItem("userToken", token);
+        } catch (error) {}
+
+        if (window.opener) {
+          window.opener.postMessage(
+            {
+              type: "social-auth-success",
+              token: token,
+            },
+            "*",
+          );
+          window.close();
+          return;
+        }
+
+        window.location.replace("/");
+      })();
+    </script>
+  </body>
+</html>
