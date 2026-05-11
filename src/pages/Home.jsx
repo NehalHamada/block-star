@@ -26,7 +26,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-const cleanApiText = (value) => value?.replace(/[\[\]]/g, "").trim();
+const cleanApiText = (value) => value?.replace(/[[\]]/g, "").trim();
 
 export function Home() {
   const navigate = useNavigate();
