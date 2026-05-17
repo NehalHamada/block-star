@@ -1,16 +1,71 @@
-# React + Vite
+# Block Star - Wooden Platform (منصة ستار - للأخشاب)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Block Star is a premium e-commerce platform specializing in custom wooden frames and artistic boards. It features an AI-driven design studio, dynamic shipping calculations, and a fully responsive, multi-language interface.
 
-Currently, two official plugins are available:
+##  Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React 19, Vite, Tailwind CSS v4.
+- **State Management**:
+  - **Server State**: TanStack Query v5 (React Query).
+  - **UI State**: Zustand.
+- **Forms & Validation**: React Hook Form, Yup/Zod.
+- **Localization**: react-i18next (Full RTL support for Arabic).
+- **Icons & Animations**: Lucide React, Framer Motion.
+- **Routing**: React Router Dom v6.
 
-## React Compiler
+##  Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. AI Design Studio
+- **AI-Powered Design**: Users can generate unique board designs by entering a simple text description.
+- **Real-time Preview**: Users can see their design and customize text, fonts, and colors before ordering.
 
-## Expanding the ESLint configuration
+### 2. Advanced E-Commerce Flow
+- **Ready-to-Order Products**: A wide collection of pre-designed boards categorized for easy browsing.
+- **Dynamic Cart**: Real-time quantity updates and coupon management.
+- **Smart Checkout**:
+  - **City-Based Shipping**: Automated shipping cost calculation based on the selected governorate (fetched via API).
+  - **Address Management**: Users can save multiple shipping addresses (Headlines) with an easy-to-use dropdown system.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Authentication & Security
+- **Social Login**: Seamless integration with Google and Facebook.
+- **Automatic Token Handling**: Environment-agnostic token consumption from URLs to ensure a smooth login flow regardless of the redirect environment (Localhost/Production).
+- **Secure API**: Custom Axios instance with request interceptors for token management and dynamic `Accept-Language` headers.
+
+### 4. User Experience (UX)
+- **Multi-language Support**: Fully localized in Arabic and English.
+- **Responsive Design**: Mobile-first approach ensuring a premium experience on all devices.
+- **RTL Support**: Optimized layout for Arabic users.
+
+##  Project Structure
+
+- `src/api`: API service layer and Axios configuration.
+- `src/components`: Reusable UI components categorized by feature (Cart, Form, Studio, etc.).
+- `src/context`: Global contexts for Authentication and Localization.
+- `src/hooks`: Custom hooks for queries (TanStack Query) and logic.
+- `src/i18n`: Localization files and configuration.
+- `src/pages`: Main application pages and route components.
+- `src/schema`: Validation schemas for forms.
+- `src/utils`: Helper functions and shared utilities.
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone [repository-url]
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Run development server**:
+   ```bash
+   npm run dev
+   ```
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+---
+*Developed with precision to deliver a premium wooden art experience.*
+*Developed by Saeed Ramadan for Ahdaf web company*

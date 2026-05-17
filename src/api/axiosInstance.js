@@ -8,10 +8,13 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("userToken");
+    const lang = localStorage.getItem("language") || "ar";
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    config.headers["Accept-Language"] = lang;
 
     return config;
   },

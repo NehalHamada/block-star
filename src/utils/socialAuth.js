@@ -56,41 +56,33 @@ export function consumeSocialAuthTokenFromUrl() {
 
 export async function startSocialLogin(endpoint) {
   const redirectUrl = getSocialAuthCallbackUrl();
-  const redirectUrls = getSocialAuthCallbackUrls();
-  const localhostRedirectUrl = LOCALHOST_CALLBACKS[0];
-  const vercelRedirectUrl =
-    getEnvCallbackUrls().find((url) => url.includes("vercel.app")) ||
-    (window.location.hostname.includes("vercel.app") ? redirectUrl : null);
 
+  // Store the redirect URL to verify it after return
   sessionStorage.setItem("socialAuthRedirectUrl", redirectUrl);
 
-  const { data } = await axiosInstance.get(endpoint, {
-    params: {
-      redirect_url: redirectUrl,
-      redirect_uri: redirectUrl,
-      callback_url: redirectUrl,
-      return_url: redirectUrl,
-      return_to: redirectUrl,
-      success_url: redirectUrl,
-      success_redirect_url: redirectUrl,
-      frontend_redirect_url: redirectUrl,
-      client_redirect_url: redirectUrl,
-      app_redirect_url: redirectUrl,
-      frontend_url: window.location.origin,
-      origin: window.location.origin,
-      localhost_redirect_url: localhostRedirectUrl,
-      local_redirect_url: localhostRedirectUrl,
-      vercel_redirect_url: vercelRedirectUrl,
-      redirect_urls: redirectUrls,
-      redirect_urls_csv: redirectUrls.join(","),
-      allowed_redirect_urls: redirectUrls,
-      allowed_redirect_urls_csv: redirectUrls.join(","),
-      callbacks: redirectUrls,
-      callbacks_csv: redirectUrls.join(","),
-    },
-  });
+  try {
+    const { data } = await axiosInstance.get(endpoint, {
+      params: {
+        redirect_url: redirectUrl,
+        callback_url: redirectUrl,
+        frontend_url: window.location.origin,
+      },
+    });
 
-  if (data.success && data.data?.url) {
-    window.location.href = data.data.url;
+    if (data.success && data.data?.url) {
+      window.location.href = data.data.url;
+    } else if (data.url) {
+      // Handle cases where the URL might be at the top level
+      window.location.href = data.url;
+    } else {
+      console.error("No redirect URL found in response:", data);
+    }
+  } catch (error) {
+    console.error("Social login start failed:", error);
+    // Fallback: try direct navigation if axios fails (though it might show JSON)
+    const baseUrl = axiosInstance.defaults.baseURL;
+    window.location.href = `${baseUrl}${endpoint}?redirect_url=${encodeURIComponent(
+      redirectUrl,
+    )}&callback_url=${encodeURIComponent(redirectUrl)}`;
   }
 }

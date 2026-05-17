@@ -293,9 +293,7 @@ export function Home() {
                   variant="secondary"
                   className="  px-8 py-3 rounded-md "
                   onClick={() => navigate("/studio")}>
-                  {isRTL
-                    ? "\u0635\u0645\u0645 \u0628\u0646\u0641\u0633\u0643"
-                    : homeCard?.data?.buttons[1].text_en}
+                  {t("studio.designWithAI")}
                 </Button>
               </div>
             </div>

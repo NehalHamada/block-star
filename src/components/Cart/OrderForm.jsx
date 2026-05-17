@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SkeletonLoader } from "../SkeletonLoader.jsx";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,6 +10,7 @@ import { PaymentMethod } from "./PaymentMethod.jsx";
 import { Button } from "../ui/Button.jsx";
 import {
   useAddressTypes,
+  useGovernorates,
   useHeadlines,
 } from "../../hooks/queries/useHeadlines.js";
 import { useCreateOrder } from "../../hooks/queries/useOrders.js";
@@ -18,7 +19,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-export const OrderForm = () => {
+export const OrderForm = ({ onShippingCostChange }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const schema = React.useMemo(() => getShippingSchema(t), [t]);
@@ -42,6 +43,8 @@ export const OrderForm = () => {
   const { data: addressResponse, isLoading: headlinesLoading } = useHeadlines();
   const { data: addressTypesResponse, isLoading: typesLoading } =
     useAddressTypes();
+  const { data: governoratesResponse, isLoading: govLoading } =
+    useGovernorates();
 
   const addresses = React.useMemo(
     () => addressResponse?.data || [],
@@ -51,8 +54,13 @@ export const OrderForm = () => {
     () => addressTypesResponse?.data || [],
     [addressTypesResponse],
   );
+  const governorates = React.useMemo(
+    () => governoratesResponse?.data || [],
+    [governoratesResponse],
+  );
 
   const selectedAddressId = watch("address_id");
+  const selectedCity = watch("city");
 
   // Options for saved addresses dropdown
   const savedAddressOptions = React.useMemo(() => {
@@ -70,6 +78,40 @@ export const OrderForm = () => {
       label: type.name,
     }));
   }, [addressTypes]);
+
+  // Options for governorates dropdown
+  const cityOptions = React.useMemo(() => {
+    return governorates.map((gov) => ({
+      value: gov.name, // The API expects the name string usually, or you can use ID if the backend expects it.
+      label: gov.name,
+      shipping_cost: gov.shipping_cost,
+    }));
+  }, [governorates]);
+
+  // Update shipping cost when address or city changes
+  useEffect(() => {
+    if (onShippingCostChange) {
+      if (selectedAddressId === "new") {
+        const gov = governorates.find((g) => g.name === selectedCity);
+        onShippingCostChange(gov ? gov.shipping_cost : 0);
+      } else {
+        const addr = addresses.find((a) => String(a.id) === selectedAddressId);
+        if (addr) {
+          // If the address object has a city that matches a governorate
+          const gov = governorates.find((g) => g.name === addr.city);
+          onShippingCostChange(gov ? gov.shipping_cost : 0);
+        } else {
+          onShippingCostChange(0);
+        }
+      }
+    }
+  }, [
+    selectedAddressId,
+    selectedCity,
+    governorates,
+    addresses,
+    onShippingCostChange,
+  ]);
 
   const onSubmit = (data) => {
     const payload = {
@@ -99,7 +141,6 @@ export const OrderForm = () => {
       onSuccess: (response) => {
         const paymentUrl = response?.payment_url;
         if (paymentUrl) {
-          // Redirect to payment gateway (MyFatoorah etc.)
           window.location.href = paymentUrl;
         } else {
           toast.success(t("orders.successMsg"));
@@ -112,7 +153,7 @@ export const OrderForm = () => {
     });
   };
 
-  if (headlinesLoading || typesLoading) {
+  if (headlinesLoading || typesLoading || govLoading) {
     return <SkeletonLoader variant="form" />;
   }
 
@@ -272,11 +313,12 @@ export const OrderForm = () => {
                 name="city"
                 control={control}
                 render={({ field }) => (
-                  <Input
-                    {...field}
+                  <FormSelect
+                    className="block mb-1 text-sm font-medium text-dark-gray"
                     label={t("forms.cityLabel")}
-                    type="text"
-                    placeholder={t("forms.cityPlaceholder")}
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    options={cityOptions}
                     error={errors.city?.message}
                   />
                 )}

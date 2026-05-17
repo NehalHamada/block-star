@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth.js";
+import { consumeSocialAuthTokenFromUrl } from "../utils/socialAuth.js";
 
 export default function SocialLoginSuccess() {
   const { login } = useAuth();
@@ -12,11 +13,15 @@ export default function SocialLoginSuccess() {
     const token = params.get("token");
 
     if (token) {
+      // Consume token into localStorage first
+      consumeSocialAuthTokenFromUrl();
+      // Then update context state
       login(token);
+      // Clean up URL and navigate
       window.history.replaceState({}, document.title, "/");
-      navigate("/");
+      navigate("/", { replace: true });
     } else {
-      navigate("/auth/login");
+      navigate("/auth/login", { replace: true });
     }
   }, [location, login, navigate]);
 

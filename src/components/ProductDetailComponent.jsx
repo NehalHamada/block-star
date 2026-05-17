@@ -7,10 +7,12 @@ import { useCartMutations } from "../hooks/queries/useCart.js";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { ThumbsSwiper } from "./ThumbsSwiper.jsx";
+import { useState } from "react";
 
 export const ProductDetailComponent = ({ product, counter, setCounter }) => {
   const { addToCart } = useCartMutations();
   const { t } = useTranslation();
+  const [selectedColor, setSelectedColor] = useState(null);
 
   const handleAddToCart = () => {
     addToCart.mutate(
@@ -91,7 +93,7 @@ export const ProductDetailComponent = ({ product, counter, setCounter }) => {
 
         {/* Usage Info */}
         {product.usage && (
-          <div className="bg-secondary/5 border border-secondary/10 rounded-2xl p-5 mt-2">
+          <div className="bg-secondary/5 border border-secondary/10 rounded-xl p-5 mt-2">
             <h3 className="font-semibold text-lg mb-2 text-secondary flex items-center gap-2">
               <TbPencilDiscount size={22} />
               {t("product.usage")}
@@ -125,10 +127,65 @@ export const ProductDetailComponent = ({ product, counter, setCounter }) => {
       </div>
 
       {/* Left Side - Image Gallery */}
-      <div className="rounded-3xl overflow-hidden">
+      <div className="rounded-xl overflow-hidden flex flex-col gap-6">
         <ThumbsSwiper images={product.images} />
+
+        {/* Colors Section */}
+        {product.colors && product.colors.length > 0 && (
+          <div className="flex flex-col gap-4">
+            <h3 className="font-semibold text-lg text-dark-gray border-b border-secondary/10 pb-2">
+              {t("product.availableColors", "الألوان المتاحة")}
+            </h3>
+
+            <div className="flex flex-wrap gap-3">
+              {product.colors.map((color) => (
+                <button
+                  key={color.id}
+                  onClick={() =>
+                    setSelectedColor(
+                      selectedColor?.id === color.id ? null : color,
+                    )
+                  }
+                  className={`flex items-center gap-2 px-3 py-2 rounded-xl cursor-pointer transition-all border ${
+                    selectedColor?.id === color.id
+                      ? "border-secondary bg-secondary/10 shadow-sm"
+                      : "border-gray-200 hover:border-secondary/50 bg-white"
+                  }`}
+                  type="button"
+                >
+                  <span
+                    className="w-5 h-5 rounded-xl shadow-sm border border-gray-300"
+                    style={{ backgroundColor: color.hex_code }}
+                  />
+                  <span className="font-medium text-sm text-gray-700">
+                    {t(`colors.${color.name}`, color.name)}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Display Selected Color Image Fully */}
+            {selectedColor && selectedColor.image_path && (
+              <div className="mt-2 relative rounded-xl overflow-hidden border border-gray-200 shadow-md bg-white animate-in fade-in slide-in-from-top-4 duration-300">
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md z-10 flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full border border-gray-300"
+                    style={{ backgroundColor: selectedColor.hex_code }}
+                  />
+                  <span className="font-bold text-gray-800 text-sm">
+                    {t(`colors.${selectedColor.name}`, selectedColor.name)}
+                  </span>
+                </div>
+                <img
+                  src={selectedColor.image_path}
+                  alt={selectedColor.name}
+                  className="w-full h-auto object-cover max-h-[500px]"
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 };
-

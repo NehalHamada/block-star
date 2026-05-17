@@ -11,7 +11,6 @@ import { LanguageContextProvider } from "./context/LanguageContext.jsx";
 import { useLanguage } from "./context/useLanguage.js";
 import { OfflineBanner } from "./components";
 import { CartDrawerProvider } from "./context/cartDrawerContext.jsx";
-import { consumeSocialAuthTokenFromUrl } from "./utils/socialAuth.js";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -28,12 +27,6 @@ const queryClient = new QueryClient({
 
 function AppContent() {
   const { isRTL } = useLanguage();
-
-  useEffect(() => {
-    if (consumeSocialAuthTokenFromUrl()) {
-      window.location.replace("/");
-    }
-  }, []);
 
   return (
     <>

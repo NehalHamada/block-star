@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./createContextRef.js";
 import authService from "../api/services/authService.jsx";
@@ -7,8 +7,45 @@ export default function AuthContextProvider({ children }) {
   const navigate = useNavigate();
 
   const [token, setToken] = useState(localStorage.getItem("userToken") || null);
-
   const [userData, setUserData] = useState(null);
+
+  const login = useCallback((authToken) => {
+    if (!authToken) return;
+    
+    // Ensure token is in localStorage immediately for subsequent API calls
+    localStorage.setItem("userToken", authToken);
+    setToken(authToken);
+
+    // Fetch user data immediately to update UI
+    authService
+      .getUser()
+      .then((response) => {
+        setUserData(response.data?.user);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user data after login:", error);
+      });
+  }, []);
+
+  // Auto-consume token from URL (fallback for direct redirects to home)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    // Check for common token parameter names
+    const urlToken = params.get("token") || params.get("access_token") || params.get("user_token");
+    
+    if (urlToken) {
+      console.log("Token detected in URL, logging in...");
+      login(urlToken);
+      
+      // Clean up URL without reload to keep it clean for the user
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.delete("token");
+      newUrl.searchParams.delete("access_token");
+      newUrl.searchParams.delete("user_token");
+      window.history.replaceState({}, document.title, newUrl.pathname + newUrl.search);
+    }
+  }, [login]);
+
   async function logOut() {
     await authService.logout();
     setToken(null);
@@ -79,12 +116,7 @@ export default function AuthContextProvider({ children }) {
     };
   }, [token]);
 
-  const login = (authToken) => {
-    setToken(authToken);
-    authService.getUser().then((response) => {
-      setUserData(response.data?.user);
-    });
-  };
+
 
   const isAuthenticated = !!token;
 

@@ -40,3 +40,13 @@ export const useDeleteHeadline = () => {
     mutationFn: (id) => addressesService.deleteHeadline(id),
   });
 };
+
+export const useGovernorates = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
+
+  return useQuery({
+    queryKey: ["governorates", lang],
+    queryFn: () => addressesService.getGovernorates(lang),
+  });
+};

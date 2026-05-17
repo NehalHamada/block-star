@@ -24,6 +24,10 @@ const addressesService = {
     const response = await axiosInstance.delete(`/addresses/${id}`);
     return response.data;
   },
+  getGovernorates: async (lang = "en") => {
+    const response = await axiosInstance.get(`/governorates?lang=${lang}`);
+    return response.data;
+  },
 };
 
 export default addressesService;

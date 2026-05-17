@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 export const Shipping = ({ setCurrentSection, setCurrentStep }) => {
   const { t } = useTranslation();
   const { data: response } = useCart();
+  const [extraShippingCost, setExtraShippingCost] = React.useState(0);
   const data = response?.data || {};
   const cartItems = data?.items || [];
 
@@ -38,12 +39,13 @@ export const Shipping = ({ setCurrentSection, setCurrentStep }) => {
 
         {/* Order Summary Details */}
         <div className="max-w-lg mx-auto w-full p-5 order-2 lg:order-1">
-          <OrderSummary />
+          <OrderSummary extraShippingCost={extraShippingCost} />
         </div>
       </div>
       <OrderForm
         setCurrentSection={setCurrentSection}
         setCurrentStep={setCurrentStep}
+        onShippingCostChange={setExtraShippingCost}
       />
     </div>
   );

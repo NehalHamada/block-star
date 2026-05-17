@@ -11,7 +11,7 @@
   },
   "home": {
     "heroBtn1": "Browse Ready Products",
-    "heroBtn2": "Design Your Board",
+    "heroBtn2": "Design with AI",
     "viewProducts": "View Products",
     "readyProducts": "Ready-to-Order Products",
     "readyProductsDesc": "Choose the right piece and order it directly without any extra steps, with guaranteed quality and precision.",
@@ -81,7 +81,7 @@
   "studio": {
     "title": "Design Studio",
     "chooseTitle": "Choose Your Design Method",
-    "chooseDesc": "Express your taste — design yourself or let AI inspire you",
+    "chooseDesc": "Express your taste and let AI inspire you with unique designs",
     "designYourself": "Design Yourself",
     "designYourselfDesc": "Full control over text, font, and color — you are the designer",
     "designWithAI": "Design with AI",
@@ -264,7 +264,8 @@
     "bestSelling": "Best Selling",
     "readyToOrder": "Ready to Order",
     "noUsageIdeas": "No usage ideas available at the moment",
-    "galleryImage": "Gallery Image"
+    "galleryImage": "Gallery Image",
+    "availableColors": "Available Colors"
   },
   "offers": {
     "title": "Offers"
@@ -519,5 +520,22 @@
     "designYourself": "Design It Yourself",
     "startDesign": "Start your own design now",
     "products": "Products"
+  },
+  "colors": {
+    "اسود": "Black",
+    "روز": "Rose",
+    "بني فاتح": "Light Brown",
+    "بني غامق": "Dark Brown",
+    "ابيض": "White",
+    "رمادي": "Gray",
+    "احمر": "Red",
+    "ازرق": "Blue",
+    "اخضر": "Green",
+    "اصفر": "Yellow",
+    "برتقالي": "Orange",
+    "بنفسجي": "Purple",
+    "ذهبي": "Gold",
+    "فضي": "Silver",
+    "وردي": "Pink"
   }
 }

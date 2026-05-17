@@ -42,7 +42,12 @@ const authService = {
   },
 
   login: async (credentials) => {
-    const { data } = await axiosInstance.post("/login", credentials);
+    const { data } = await axiosInstance.post("/login", credentials, {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     return data;
   },
 
@@ -57,27 +62,25 @@ const authService = {
   },
 
   getUser: async () => {
-    const { data } = await axiosInstance.get(
-      "/user",
-      {},
-      {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        },
+    const token = localStorage.getItem("userToken");
+    const { data } = await axiosInstance.get("/user", {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
     return data;
   },
 
   logout: async () => {
+    const token = localStorage.getItem("userToken");
     const { data } = await axiosInstance.post(
       "/logout",
       {},
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     );

@@ -1,9 +1,10 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import AuthLayout from "../layout/AuthLayout.jsx";
 import MainLayout from "../layout/MainLayout.jsx";
 import { PageLoader, ProtectedRoute } from "../components";
 import SocialLoginSuccess from "../pages/SocialLoginSuccess.jsx";
+import AuthContextProvider from "../context/AuthContext.jsx";
 
 // Lazy load all page components for code splitting
 const Home = lazy(() =>
@@ -106,7 +107,15 @@ const NotFound = lazy(() =>
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <AuthContextProvider>
+        <Outlet />
+      </AuthContextProvider>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <MainLayout />,
     children: [
       {
         index: true,
@@ -260,9 +269,9 @@ export const router = createBrowserRouter([
     ],
   },
 
-  {
-    path: "/auth",
-    element: <AuthLayout />,
+      {
+        path: "/auth",
+        element: <AuthLayout />,
     children: [
       {
         path: "login",
@@ -306,12 +315,14 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "*",
-    element: (
-      <Suspense fallback={<PageLoader />}>
-        <NotFound />
-      </Suspense>
-    ),
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <NotFound />
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);

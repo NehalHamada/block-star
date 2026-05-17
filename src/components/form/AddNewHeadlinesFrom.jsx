@@ -10,6 +10,7 @@ import {
   useAddressTypes,
   useCreateHeadline,
   useUpdateHeadline,
+  useGovernorates,
 } from "../../hooks/queries/useHeadlines.js";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
@@ -45,24 +46,31 @@ export const AddNewHeadlinesFrom = () => {
   });
 
   const { data: addressTypesData } = useAddressTypes();
+  const { data: governoratesData } = useGovernorates();
   const [addressTypes, setAddressTypes] = useState([]);
+  const [cityOptions, setCityOptions] = useState([]);
   const { mutateAsync: createHeadline } = useCreateHeadline();
   const { mutateAsync: updateHeadline } = useUpdateHeadline();
 
   useEffect(() => {
-    const fetchAddressTypes = async () => {
-      try {
-        const mapped = (addressTypesData?.data || []).map((type) => ({
-          value: type.id,
-          label: type.name,
-        }));
-        setAddressTypes(mapped);
-      } catch (error) {
-        console.error("Error fetching address types:", error);
-      }
-    };
-    fetchAddressTypes();
+    if (addressTypesData?.data) {
+      const mapped = addressTypesData.data.map((type) => ({
+        value: type.id,
+        label: type.name,
+      }));
+      setAddressTypes(mapped);
+    }
   }, [addressTypesData]);
+
+  useEffect(() => {
+    if (governoratesData?.data) {
+      const mapped = governoratesData.data.map((gov) => ({
+        value: gov.name,
+        label: gov.name,
+      }));
+      setCityOptions(mapped);
+    }
+  }, [governoratesData]);
 
   const handleCreateHeadline = async (data) => {
     try {
@@ -180,11 +188,12 @@ export const AddNewHeadlinesFrom = () => {
             name="city"
             control={control}
             render={({ field }) => (
-              <Input
-                {...field}
+              <FormSelect
+                className="block mb-1 text-sm font-medium text-dark-gray"
                 label={t("forms.cityLabel")}
-                type="text"
-                placeholder={t("forms.cityPlaceholder")}
+                value={field.value}
+                onChange={(value) => field.onChange(value)}
+                options={cityOptions}
                 error={errors.city?.message}
               />
             )}

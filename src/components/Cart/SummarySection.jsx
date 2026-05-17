@@ -36,7 +36,7 @@ export const SummarySection = () => {
 };
 
 // Order Summary Component
-export const OrderSummary = () => {
+export const OrderSummary = ({ extraShippingCost = 0 }) => {
   const { t } = useTranslation();
   const { data: response } = useCart();
   const data = response?.data || {};
@@ -44,9 +44,10 @@ export const OrderSummary = () => {
 
   // Calculate totals from dynamic data
   const itemsCount = cartItems.length;
-  const shippingCost = data?.shipping_cost || 0;
+  // Use shipping cost from API if available, otherwise use local extraShippingCost
+  const shippingCost = (data?.shipping_cost || 0) + extraShippingCost;
   const totalDiscount = data?.discount || 0;
-  const total = data?.total || 0;
+  const total = (data?.total || 0) + extraShippingCost;
 
   return (
     <div className="flex flex-col gap-2 sm:gap-5  w-full  py-4 sm:py-5 px-4 sm:px-6 lg:px-10 bg-secondary/10 rounded-lg">
