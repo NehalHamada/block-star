@@ -15,6 +15,9 @@ export const ProductItem = ({ item }) => {
     quantity,
     main_image,
     size,
+    color_name,
+    color_image,
+    item_total,
   } = item;
   const { updateCart, removeFromCart } = useCartMutations();
 
@@ -31,16 +34,41 @@ export const ProductItem = ({ item }) => {
     });
   };
 
+  // RATIONALE: Display color image if selected, fallback to main image
+  const resolvedImage = color_image || main_image;
+
   return (
     <div className="flex flex-col sm:flex-row items-start justify-between gap-4 sm:gap-6 py-4">
       {/* Product Info Section */}
       <div className="flex items-start gap-3 sm:gap-4 flex-1 w-full sm:w-auto">
-        {/* Product Image */}
-        <img
-          src={main_image}
-          className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg object-cover flex-shrink-0"
-          alt={name}
-        />
+        {/* Product Image or Premium Fallback */}
+        {resolvedImage ? (
+          <img
+            src={resolvedImage}
+            className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg object-cover flex-shrink-0"
+            alt={name}
+          />
+        ) : (
+          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg bg-secondary/5 border border-secondary/15 flex flex-col items-center justify-center gap-2 flex-shrink-0 text-secondary">
+            <svg
+              className="w-7 h-7 sm:w-9 sm:h-9 opacity-85"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+              />
+            </svg>
+            <span className="text-[10px] sm:text-xs font-semibold font-cairo opacity-90 px-1 text-center truncate w-full">
+              {name}
+            </span>
+          </div>
+        )}
 
         {/* Product Details */}
         <div className="flex flex-col gap-2 flex-1 min-w-0">
@@ -54,6 +82,16 @@ export const ProductItem = ({ item }) => {
             <div className="flex items-center gap-2 text-xs sm:text-sm text-dark-gray">
               <span className="font-cairo">{size}</span>
               <ChevronDown size={16} className="text-dark-gray flex-shrink-0" />
+            </div>
+          )}
+
+          {/* Color Details - RATIONALE: Clearly show the selected color variant in the cart list */}
+          {color_name && (
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-dark-gray font-cairo mt-0.5">
+              <span className="text-gray-400">{t("cart.color")}:</span>
+              <span className="font-medium text-secondary bg-secondary/5 px-2 py-0.5 rounded-lg border border-secondary/10">
+                {color_name}
+              </span>
             </div>
           )}
 
@@ -84,6 +122,16 @@ export const ProductItem = ({ item }) => {
               </span>
             )}
           </div>
+
+          {/* Line Item Total - RATIONALE: Display total cost for the current item quantity */}
+          {item_total && (
+            <div className="text-xs sm:text-sm text-gray-500 font-cairo mt-1 flex items-center gap-1">
+              <span>{t("cart.itemTotal")}:</span>
+              <span className="font-bold text-secondary text-sm sm:text-base">
+                {item_total} {t("product.currency")}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 

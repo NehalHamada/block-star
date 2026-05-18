@@ -86,30 +86,68 @@ export function CartDrawer() {
                   <p className="text-sm">{t("cart.empty")}</p>
                 </div>
               ) : (
-                cartItems.map((item) => (
-                  <div
-                    key={item.product_id}
-                    className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
-                  >
-                    {/* Image */}
-                    <img
-                      src={item.main_image}
-                      alt={item.name}
-                      className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
-                    />
+                cartItems.map((item) => {
+                  const resolvedImage = item.color_image || item.main_image;
+                  return (
+                    <div
+                      key={item.product_id}
+                      className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+                    >
+                      {/* Image or premium fallback */}
+                      {resolvedImage ? (
+                        <img
+                          src={resolvedImage}
+                          alt={item.name}
+                          className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 rounded-lg bg-secondary/5 border border-secondary/15 flex flex-col items-center justify-center flex-shrink-0 text-secondary">
+                          <svg
+                            className="w-5 h-5 opacity-80"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                            />
+                          </svg>
+                        </div>
+                      )}
 
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 line-clamp-2 leading-snug">
-                        {item.name}
-                      </p>
-                      <p className="text-xs text-gray-400 mt-0.5">
-                        {t("cart.quantity")}: {item.quantity}
-                      </p>
-                      <p className="text-sm font-bold text-secondary mt-1">
-                        {item.price} {t("product.currency")}
-                      </p>
-                    </div>
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-800 line-clamp-2 leading-snug">
+                          {item.name}
+                        </p>
+                        
+                        {/* Selected Color - RATIONALE: Render color name in quick slide drawer as well */}
+                        {item.color_name && (
+                          <p className="text-xs text-gray-500 font-cairo mt-0.5">
+                            {t("cart.color")}: <span className="font-semibold text-secondary">{item.color_name}</span>
+                          </p>
+                        )}
+
+                        <p className="text-xs text-gray-400 mt-0.5">
+                          {t("cart.quantity")}: {item.quantity}
+                        </p>
+                        
+                        {/* Price Details - Unit & Line Total */}
+                        <div className="flex flex-col gap-0.5 mt-1">
+                          <p className="text-sm font-bold text-secondary">
+                            {item.price} {t("product.currency")}
+                          </p>
+                          {item.item_total && (
+                            <p className="text-[11px] text-gray-500 font-cairo">
+                              {t("cart.itemTotal")}: {item.item_total} {t("product.currency")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
 
                     {/* Remove */}
                     <button
@@ -120,7 +158,8 @@ export function CartDrawer() {
                       <Trash size={15} className="text-red-400" />
                     </button>
                   </div>
-                ))
+                  );
+                })
               )}
             </div>
 

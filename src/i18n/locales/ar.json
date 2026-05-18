@@ -129,6 +129,8 @@
     "successMsg": "سيتم مراجعة التصميم من قبل الإدارة والتواصل معك قريبًا.",
     "tryAnother": "تصميم لوحة أخرى",
     "browseProducts": "تصفح المنتجات",
+    "chooseCategory": "نوع الشيء المراد تصميمه (مطلوب)",
+    "selectCategory": "اختر الفئة...",
     "fonts": {
       "classic": "كلاسيك",
       "heritage": "تراثي",
@@ -215,10 +217,14 @@
     "discount": "الخصم",
     "total": "الإجمالي",
     "sar": "ريال",
+    "showDetails": "عرض التفاصيل بالكامل",
+    "hideDetails": "إخفاء التفاصيل",
+    "payNow": "إتمام الدفع الآن",
     "methods": {
       "cash_on_delivery": "الدفع عند الاستلام",
       "credit_card": "بطاقة ائتمان",
-      "online": "دفع أونلاين"
+      "online": "دفع أونلاين",
+      "myfatoorah": "ماي فاتورة"
     },
     "status": {
       "pending": "بانتظار الدفع",
@@ -243,6 +249,7 @@
     "outOfStock": "نفذت الكمية",
     "inStock": "متوفر",
     "limited": "كمية محدودة",
+    "price": "السعر",
     "currency": "ريال",
     "discount": "خصم",
     "usage": "الاستخدام:",
@@ -349,6 +356,8 @@
     "emptyDesc": "قم باختيار المنتجات الجاهزة او قم بتصميم المنتج الخاص بك بنفسك او بالذكاء الاصطناعي",
     "total": "الإجمالي",
     "checkout": "إتمام الشراء",
+    "color": "اللون",
+    "itemTotal": "الإجمالي",
     "quantity": "الكمية",
     "remove": "حذف",
     "continueShopping": "مواصلة التسوق",
@@ -370,6 +379,7 @@
     "paymentFailedDesc": "حدث خطأ أثناء عملية الدفع. يرجى المحاولة مرة أخرى.",
     "orderNumber": "رقم الطلب",
     "orderDate": "تاريخ الطلب",
+    "phone": "رقم الجوال",
     "billingDetails": "بيانات المشتري",
     "shippingAddress": "عنوان الشحن",
     "selectSavedAddress": "اختر عنواناً محفوظاً أو أضف جديداً",
@@ -509,6 +519,7 @@
     "seeAll": "عرض الكل",
     "noData": "لا توجد بيانات",
     "notAvailable": "غير متوفر",
+    "email": "البريد الإلكتروني",
     "previous": "السابق",
     "next": "التالي"
   },

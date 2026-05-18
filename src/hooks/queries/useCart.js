@@ -79,9 +79,9 @@ export const useCartMutations = () => {
   const queryClient = useQueryClient();
 
   const addToCart = useMutation({
-    mutationFn: ({ productId, quantity }) =>
-      cartService.addToCart(productId, quantity),
-    onMutate: async ({ productId, quantity }) => {
+    mutationFn: ({ productId, quantity, productColorId }) =>
+      cartService.addToCart(productId, quantity, productColorId),
+    onMutate: async ({ productId, quantity, productColorId }) => {
       await queryClient.cancelQueries(["cart"]);
       const previousCart = queryClient.getQueryData(["cart"]);
       queryClient.setQueryData(["cart"], (old) => {
@@ -91,7 +91,15 @@ export const useCartMutations = () => {
           ...old,
           data: {
             ...currentData,
-            items: [...items, { product_id: productId, quantity }],
+            items: [
+              ...items,
+              {
+                product_id: productId,
+                quantity,
+                // RATIONALE: Optimistically include product_color_id if defined for immediate UI reactivity
+                ...(productColorId && { product_color_id: productColorId }),
+              },
+            ],
           },
         };
       });

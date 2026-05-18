@@ -15,8 +15,13 @@ export const ProductDetailComponent = ({ product, counter, setCounter }) => {
   const [selectedColor, setSelectedColor] = useState(null);
 
   const handleAddToCart = () => {
+    // RATIONALE: Pass selectedColor.id as productColorId to cart mutation if available
     addToCart.mutate(
-      { productId: product.id, quantity: counter },
+      { 
+        productId: product.id, 
+        quantity: counter, 
+        productColorId: selectedColor?.id 
+      },
       {
         onSuccess: () => {
           toast.success(t("product.addedToCart", { name: product.name }));

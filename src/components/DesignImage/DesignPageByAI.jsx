@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FormInput } from "./FormInput";
+import { FormSelect } from "./FormSelect";
 import { Button } from "../ui";
 import { FaPaintBrush } from "react-icons/fa";
 import {
@@ -10,6 +11,7 @@ import useStudio from "../../hooks/queries/useStudio";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { BiSolidCheckCircle } from "react-icons/bi";
+import axiosInstance from "../../api/axiosInstance.js";
 
 export function DesignPageByAI({ onStepChange }) {
   const { t } = useTranslation();
@@ -19,16 +21,47 @@ export function DesignPageByAI({ onStepChange }) {
   const [generatedOptions, setGeneratedOptions] = useState([]); // API options array
   const [approvedBoardData, setApprovedBoardData] = useState(null); // from approve API response
 
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(undefined);
+  const [categoriesLoading, setCategoriesLoading] = useState(false);
+
+  // RATIONALE: Fetch categories from real API to display in a mandatory dropdown list
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setCategoriesLoading(true);
+      try {
+        const { data } = await axiosInstance.get("/get-all-categories");
+        if (data?.success && data?.data) {
+          setCategories(data.data);
+          if (data.data.length > 0) {
+            setSelectedCategoryId(data.data[0].id);
+          }
+        }
+      } catch (error) {
+        // Silently catch error to comply with "no console logs" rule
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const { generateArtisticBoard, approveArtisticBoard } = useStudio();
 
   // Handle generate button click — calls real API
   const handleGenerate = () => {
-    if (!prompt.trim()) return;
+    if (!prompt.trim() || !selectedCategoryId) return;
 
     setStep("loading");
 
+    const selectedCategory = categories.find((c) => String(c.id) === String(selectedCategoryId));
+    const categoryName = selectedCategory ? selectedCategory.name : "";
+
+    // RATIONALE: Prepend category information clearly in the prompt to direct the AI accurately
+    const finalPrompt = `نوع التصميم: ${categoryName} - الوصف: ${prompt}`;
+
     generateArtisticBoard.mutate(
-      { prompt },
+      { prompt: finalPrompt },
       {
         onSuccess: (data) => {
           if (data?.success && data?.options?.length > 0) {
@@ -234,6 +267,18 @@ export function DesignPageByAI({ onStepChange }) {
         {t("studio.writeIdea")}
       </h1>
 
+      {/* RATIONALE: Render mandatory category dropdown selector from real API */}
+      <FormSelect
+        label={t("studio.chooseCategory")}
+        value={selectedCategoryId}
+        onChange={setSelectedCategoryId}
+        options={categories.map((cat) => ({
+          value: cat.id,
+          label: cat.name,
+        }))}
+        className="w-full font-cairo"
+      />
+
       <FormInput
         value={prompt}
         onChange={setPrompt}
@@ -245,11 +290,11 @@ export function DesignPageByAI({ onStepChange }) {
       />
 
       {/* Generate Button */}
-      <div className="flex justify-center pt-4 w-[50%] mx-auto">
+      <div className="flex justify-center pt-4 w-[50%] mx-auto font-cairo">
         <Button
           onClick={handleGenerate}
-          disabled={!prompt.trim() || generateArtisticBoard.isPending}
-          className={`w-full ${prompt.trim()
+          disabled={!prompt.trim() || !selectedCategoryId || generateArtisticBoard.isPending}
+          className={`w-full ${(prompt.trim() && selectedCategoryId)
               ? "bg-secondary text-white hover:bg-secondary/90 cursor-pointer"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}

@@ -1,11 +1,16 @@
 import axiosInstance from "../axiosInstance.js";
 
 export const cartService = {
-  addToCart: async (productId, quantity) => {
-    const res = await axiosInstance.post(`/cart/items`, {
+  addToCart: async (productId, quantity, productColorId) => {
+    // RATIONALE: Keep compatibility with products that do not have color variants
+    const payload = {
       product_id: productId,
       quantity,
-    });
+    };
+    if (productColorId) {
+      payload.product_color_id = productColorId;
+    }
+    const res = await axiosInstance.post(`/cart/items`, payload);
     return res.data;
   },
   getCart: async (lang = "en") => {

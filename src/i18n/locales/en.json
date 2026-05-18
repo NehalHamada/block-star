@@ -129,6 +129,8 @@
     "successMsg": "The design will be reviewed by the administration and we will contact you soon.",
     "tryAnother": "Design another board",
     "browseProducts": "Browse products",
+    "chooseCategory": "Item Type to Design (Required)",
+    "selectCategory": "Select category...",
     "fonts": {
       "classic": "Classic",
       "heritage": "Heritage",
@@ -215,10 +217,14 @@
     "discount": "Discount",
     "total": "Total",
     "sar": "SAR",
+    "showDetails": "Show Full Details",
+    "hideDetails": "Hide Details",
+    "payNow": "Pay Now",
     "methods": {
       "cash_on_delivery": "Cash on Delivery",
       "credit_card": "Credit Card",
-      "online": "Online Payment"
+      "online": "Online Payment",
+      "myfatoorah": "MyFatoorah"
     },
     "status": {
       "pending": "Pending Payment",
@@ -243,6 +249,7 @@
     "outOfStock": "Out of Stock",
     "inStock": "In Stock",
     "limited": "Limited Stock",
+    "price": "Price",
     "currency": "SAR",
     "discount": "Discount",
     "usage": "Usage:",
@@ -350,6 +357,8 @@
     "emptyDesc": "Choose ready-made products or design your own using AI.",
     "total": "Total",
     "checkout": "Checkout",
+    "color": "Color",
+    "itemTotal": "Total",
     "quantity": "Quantity",
     "remove": "Remove",
     "continueShopping": "Continue Shopping",
@@ -371,6 +380,7 @@
     "paymentFailedDesc": "Something went wrong with your payment. Please try again.",
     "orderNumber": "Order Number",
     "orderDate": "Order Date",
+    "phone": "Phone Number",
     "billingDetails": "Billing Details",
     "shippingAddress": "Shipping Address",
     "selectSavedAddress": "Select a saved address or add a new one",
@@ -510,6 +520,7 @@
     "seeAll": "See All",
     "noData": "No data available",
     "notAvailable": "N/A",
+    "email": "Email",
     "previous": "Previous",
     "next": "Next"
   },
