@@ -60,7 +60,8 @@
     "ratingSelect": "Please select a rating",
     "commentRequired": "Comment is required",
     "commentMinLength": "Comment must be at least 10 characters",
-    "breadcrumb": "Add Your Comment"
+    "breadcrumb": "Add Your Comment",
+    "alreadyReviewed": "You have already added a comment"
   },
   "dropdown": {
     "editProfile": "Edit Profile",
@@ -186,7 +187,9 @@
     "feature3": "Choose the style (Modern - Classic - Kids)",
     "feature4": "Ready-made or custom to your taste",
     "notFound": "Category Not Found",
-    "noProducts": "No products available currently"
+    "noProducts": "No products available currently",
+    "noProductsDesc": "We are constantly working to provide new collections to match your fine taste. You can also start creating and designing your custom board right now via the studio.",
+    "resetFilters": "Reset Filters"
   },
   "orders": {
     "breadcrumb": "Orders",
@@ -548,5 +551,69 @@
     "ذهبي": "Gold",
     "فضي": "Silver",
     "وردي": "Pink"
+  },
+  "errors": {
+    "databaseError": "An unexpected server error occurred. Please try again later or check your submission."
+  },
+  "headlines": {
+    "title": "Headlines",
+    "desc": "Manage and customize the homepage headlines.",
+    "addNew": "Add New Headline",
+    "addNewTitle": "Add New Headline",
+    "addNewDesc": "Enter the new headline details accurately.",
+    "editTitle": "Edit Headline",
+    "editDesc": "Update the headline information.",
+    "addSuccess": "Headline added successfully.",
+    "updateSuccess": "Headline updated successfully.",
+    "loading": "Loading...",
+    "loadError": "An error occurred while loading headlines.",
+    "noHeadlines": "No headlines found yet.",
+    "deleteSuccess": "Headline deleted successfully.",
+    "confirmDelete": "Are you sure you want to delete this headline?",
+    "confirmDeleteTitle": "Delete Headline",
+    "confirmDeleteMessage": "Are you sure you want to delete this headline? This action cannot be undone."
+  },
+  "common": {
+    "home": "Home",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "seeAll": "See All",
+    "notAvailable": "N/A",
+    "email": "Email",
+    "send": "Send",
+    "currency": "SAR",
+    "address": "Address",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "auth": {
+    "loginRequired": "You must log in first to perform this action.",
+    "loginTitle": "Login",
+    "googleLogin": "Login with Google",
+    "facebookLogin": "Login with Facebook",
+    "or": "Or",
+    "forgotPasswordTitle": "Forgot Password?",
+    "login": "Login",
+    "noAccount": "Don't have an account?",
+    "createNewAccount": "Create new account",
+    "registerTitle": "Register",
+    "register": "Register",
+    "haveAccount": "Already have an account?",
+    "verify": "Verify",
+    "otpVerifyDesc": "Please enter the verification code sent to your email to verify your account.",
+    "forgotPasswordDesc": "Enter your email address to receive a password reset code.",
+    "sendCode": "Send Code",
+    "confirmIdentity": "Confirm Identity",
+    "verifyAccount": "Verify Account",
+    "otpForgotDesc": "Please enter the verification code sent to your email to reset your password.",
+    "didNotReceiveCode": "Didn't receive the code?",
+    "resendCode": "Resend Code",
+    "resetPasswordTitle": "Reset Password",
+    "resetPasswordDesc": "Please enter and confirm your new password."
   }
 }

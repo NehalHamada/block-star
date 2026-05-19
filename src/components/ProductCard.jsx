@@ -3,6 +3,7 @@ import { Star, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BiAddToQueue } from "react-icons/bi";
 import { useAuth } from "../hooks/useAuth.js";
+import { useRequireAuth } from "../hooks/useRequireAuth.js";
 import { IoBookmark } from "react-icons/io5";
 import { SavedProductContext, CartDrawerContext } from "../context/createContextRef.js";
 import { useCartMutations } from "../hooks/queries/useCart.js";
@@ -13,9 +14,12 @@ import { cardItem, hoverScale } from "../utils/animations.js";
 import { CiBookmark } from "react-icons/ci";
 import { useTranslation } from "react-i18next";
 
+import { ImageWithFallback } from "./ui/ImageWithFallback.jsx";
+
 export const ProductCard = React.memo(function ProductCard({ product }) {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { requireAuth } = useRequireAuth();
   const { isSaved, toggleSaved } = useContext(SavedProductContext);
   const { openDrawer } = useContext(CartDrawerContext);
   const { addToCart } = useCartMutations();
@@ -25,22 +29,26 @@ export const ProductCard = React.memo(function ProductCard({ product }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    addToCart.mutate(
-      { productId: product.id, quantity: 1 },
-      {
-        onSuccess: () => {
-          openDrawer();
+    requireAuth(() => {
+      addToCart.mutate(
+        { productId: product.id, quantity: 1 },
+        {
+          onSuccess: () => {
+            openDrawer();
+          },
+          onError: () => {
+            toast.error(t("product.addToCartError"));
+          },
         },
-        onError: () => {
-          toast.error(t("product.addToCartError"));
-        },
-      },
-    );
+      );
+    });
   };
 
   const handleToggleBookmark = (e) => {
     e.stopPropagation();
-    toggleSaved(product.id);
+    requireAuth(() => {
+      toggleSaved(product.id);
+    });
   };
 
   const handleCardClick = () => {
@@ -62,7 +70,7 @@ export const ProductCard = React.memo(function ProductCard({ product }) {
           </div>
         </div>
 
-        <img
+        <ImageWithFallback
           src={product.main_image}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -77,20 +85,19 @@ export const ProductCard = React.memo(function ProductCard({ product }) {
             <span className="font-sans pt-1">{product.average_rating}</span>
           </div>
           <div className="rounded-full p-1">
-            {isAuthenticated &&
-              (saved ? (
-                <IoBookmark
-                  size={25}
-                  onClick={handleToggleBookmark}
-                  className="text-secondary transition-transform active:scale-75"
-                />
-              ) : (
-                <CiBookmark
-                  size={25}
-                  onClick={handleToggleBookmark}
-                  className="text-secondary transition-transform active:scale-75"
-                />
-              ))}
+            {saved ? (
+              <IoBookmark
+                size={25}
+                onClick={handleToggleBookmark}
+                className="text-secondary transition-transform active:scale-75"
+              />
+            ) : (
+              <CiBookmark
+                size={25}
+                onClick={handleToggleBookmark}
+                className="text-secondary transition-transform active:scale-75"
+              />
+            )}
           </div>
         </div>
 

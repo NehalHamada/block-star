@@ -17,11 +17,14 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "../api/services/products.api.js";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../hooks/useAuth.js";
+import { useRequireAuth, useDocumentMetadata } from "../hooks";
 
 export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { requireAuth } = useRequireAuth();
   const lang = i18n.language;
   const [counter, setCounter] = useState(1);
 
@@ -31,7 +34,23 @@ export function ProductDetail() {
     enabled: !!id,
   });
 
+  const { userData, isAuthenticated } = useAuth();
   const product = productData?.data;
+
+  useDocumentMetadata(
+    product?.name,
+    product?.description || `${product?.name} - اكتشف تفاصيل المنتج وأسعاره وميزاته الإبداعية على بلوك ستار.`
+  );
+
+  const hasReviewed = React.useMemo(() => {
+    if (!isAuthenticated || !userData || !product?.reviews) return false;
+    const currentUserName = userData.name?.trim().toLowerCase();
+    if (!currentUserName) return false;
+    return product.reviews.some((review) => {
+      const reviewerName = (review.user_name || review.name || "").trim().toLowerCase();
+      return reviewerName === currentUserName;
+    });
+  }, [isAuthenticated, userData, product?.reviews]);
 
   if (isLoading) {
     return <SkeletonLoader variant="product" />;
@@ -177,14 +196,17 @@ export function ProductDetail() {
         <ReviewSection reviews={product.reviews || []} />
         <div className="w-full flex items-center justify-center">
           <Button
-            className=" mx-auto w-full max-w-xs rounded-lg"
+            className=" mx-auto w-full max-w-xs rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
             variant="outline"
+            disabled={hasReviewed}
             onClick={() =>
-              navigate("/add-comment", { state: { productId: product.id } })
+              requireAuth(() =>
+                navigate("/add-comment", { state: { productId: product.id } })
+              )
             }
           >
             <MessageSquareText size={20} />
-            {t("product.addComment")}
+            {hasReviewed ? t("reviews.alreadyReviewed") : t("product.addComment")}
           </Button>
         </div>
       </div>

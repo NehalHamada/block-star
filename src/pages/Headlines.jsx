@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Header } from "../components";
+import React, { useState } from "react";
+import { Button, Header, ConfirmModal } from "../components";
 import { useNavigate } from "react-router-dom";
 import { HeadlineCard } from "../components/HeadlineCard";
 import {
@@ -14,6 +14,8 @@ export const Headlines = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+  
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const breadcrumbs = [
     { label: t("common.home"), path: "/" },
@@ -27,18 +29,24 @@ export const Headlines = () => {
     navigate("/add-new-headlines", { state: { headline } });
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm(t("headlines.confirmDelete"))) {
-      deleteHeadline(id, {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["headlines"] });
-          toast.success(t("headlines.deleteSuccess"));
-        },
-        onError: (error) => {
-          toast.error(error?.message);
-        },
-      });
-    }
+  const handleDeleteClick = (id) => {
+    setItemToDelete(id);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!itemToDelete) return;
+    
+    deleteHeadline(itemToDelete, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["headlines"] });
+        toast.success(t("headlines.deleteSuccess"));
+        setItemToDelete(null);
+      },
+      onError: (error) => {
+        toast.error(error?.message);
+        setItemToDelete(null);
+      },
+    });
   };
 
   return (
@@ -46,12 +54,12 @@ export const Headlines = () => {
       <Header breadcrumbs={breadcrumbs} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10 py-8 sm:py-12 md:py-16">
         <div className="flex flex-col gap-5 items-center justify-center py-5 mb-5">
-          <p className="text-3xl font-bold font-noto">{t("headlines.title")}</p>
+          <p className="text-3xl font-bold font-noto text-secondary">{t("headlines.title")}</p>
           <p className="max-w-2xl text-center text-lg text-dark-gray">
             {t("headlines.desc")}
           </p>
         </div>
-        <div className="w-full max-w-xl border border-dashed border-secondary hover:bg-secondary/10 rounded-full mx-auto mb-8">
+        <div className="w-full max-w-xl border border-dashed border-secondary hover:bg-secondary/10 rounded-full mx-auto mb-8 transition-colors duration-300">
           <Button
             className="w-full"
             variant="ghost"
@@ -75,7 +83,7 @@ export const Headlines = () => {
                 key={headline.id}
                 headline={headline}
                 onEdit={handleEdit}
-                onDelete={handleDelete}
+                onDelete={handleDeleteClick}
                 isDeleting={isDeleting}
               />
             ))
@@ -88,6 +96,17 @@ export const Headlines = () => {
           )}
         </div>
       </div>
+      
+      <ConfirmModal
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        title={t("headlines.confirmDeleteTitle", "حذف العنوان")}
+        message={t("headlines.confirmDeleteMessage", "هل أنت متأكد من أنك تريد حذف هذا العنوان؟ لا يمكن التراجع عن هذا الإجراء.")}
+        confirmText={t("common.delete", "حذف")}
+        cancelText={t("common.cancel", "إلغاء")}
+        isLoading={isDeleting}
+      />
     </div>
   );
 };

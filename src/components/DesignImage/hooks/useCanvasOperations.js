@@ -187,7 +187,6 @@ export function useCanvasOperations(canvas, textObj, setTextObj, formData) {
         multiplier: multiplier,
       });
     } catch (error) {
-      console.error("Error capturing canvas:", error);
       return null;
     }
   }, [canvas]);

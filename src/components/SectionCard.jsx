@@ -1,14 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { fadeInLeft } from "../utils/animations.js";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { useRequireAuth } from "../hooks/useRequireAuth.js";
 
 export const SectionCard = React.memo(function SectionCard({ category }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { requireAuth } = useRequireAuth();
 
   const isRtl = i18n.language === "ar";
 
@@ -16,7 +17,9 @@ export const SectionCard = React.memo(function SectionCard({ category }) {
 
   const handleClick = () => {
     if (category.isCTA) {
-      navigate("/studio");
+      requireAuth(() => {
+        navigate("/studio");
+      });
     } else {
       navigate(`/categories/${category.id}`);
     }
@@ -32,7 +35,8 @@ export const SectionCard = React.memo(function SectionCard({ category }) {
     >
       {/* Image */}
       <motion.div
-        className="w-full md:w-[400px] h-[250px] rounded-xl overflow-hidden"
+        onClick={handleClick}
+        className="w-full md:w-[400px] h-[250px] rounded-xl overflow-hidden cursor-pointer"
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 22 }}
       >
@@ -76,7 +80,7 @@ const ArrowButton = ({ onClick, isRtl }) => {
       onClick={onClick}
       whileHover={{ scale: 1.15, rotate: -5 }}
       whileTap={{ scale: 0.9 }}
-      className="w-9 h-9 rounded-full border border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-white transition"
+      className="w-9 h-9 rounded-full border border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-white transition cursor-pointer"
     >
       {isRtl ? <FaArrowLeftLong /> : <FaArrowRightLong />}
     </motion.button>

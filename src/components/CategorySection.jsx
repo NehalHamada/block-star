@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProductsBySubcategory } from "../api/services/products.api.js";
 import { useTranslation } from "react-i18next";
 
-export function CategorySection({ subcategory, filters = {} }) {
+export function CategorySection({ subcategory, filters = {}, onResetFilters }) {
   const { i18n } = useTranslation();
   const lang = i18n.language;
   // Exclude subcategory_id from filter params — CategorySection always scopes
@@ -22,7 +22,6 @@ export function CategorySection({ subcategory, filters = {} }) {
     queryFn: () => getProductsBySubcategory(subcategory.id, lang, cleanFilters),
     enabled: !!subcategory.id,
   });
-  console.log({ productsData });
 
   const products = productsData?.data?.data || [];
 
@@ -46,7 +45,7 @@ export function CategorySection({ subcategory, filters = {} }) {
           ))}
         </div>
       ) : (
-        <ProductList products={products} />
+        <ProductList products={products} onResetFilters={onResetFilters} />
       )}
     </div>
   );

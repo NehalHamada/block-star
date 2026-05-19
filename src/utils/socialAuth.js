@@ -74,11 +74,8 @@ export async function startSocialLogin(endpoint) {
     } else if (data.url) {
       // Handle cases where the URL might be at the top level
       window.location.href = data.url;
-    } else {
-      console.error("No redirect URL found in response:", data);
     }
   } catch (error) {
-    console.error("Social login start failed:", error);
     // Fallback: try direct navigation if axios fails (though it might show JSON)
     const baseUrl = axiosInstance.defaults.baseURL;
     window.location.href = `${baseUrl}${endpoint}?redirect_url=${encodeURIComponent(

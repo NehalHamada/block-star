@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/Button.jsx";
+import { ImageWithFallback } from "./ui/ImageWithFallback.jsx";
 
 export const OrderCard = ({ order, showTracking = true }) => {
   const { t, i18n } = useTranslation();
@@ -338,30 +339,11 @@ export const OrderProductCard = ({ item }) => {
     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 py-4 border-b border-light-gray last:border-0">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center flex-1 w-full">
         {/* Product Image or Premium Fallback */}
-        {resolvedImage ? (
-          <img
-            src={resolvedImage}
-            alt={item.product_name}
-            className="w-24 sm:w-24 md:w-32 h-24 sm:h-24 md:h-32 object-cover rounded-lg flex-shrink-0"
-          />
-        ) : (
-          <div className="w-24 sm:w-24 md:w-32 h-24 sm:h-24 md:h-32 rounded-lg bg-secondary/5 border border-secondary/15 flex flex-col items-center justify-center gap-2 flex-shrink-0 text-secondary">
-            <svg
-              className="w-7 h-7 md:w-9 md:h-9 opacity-85"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-              />
-            </svg>
-          </div>
-        )}
+        <ImageWithFallback
+          src={resolvedImage}
+          alt={item.product_name}
+          className="w-24 sm:w-24 md:w-32 h-24 sm:h-24 md:h-32 object-cover rounded-lg flex-shrink-0"
+        />
 
         <div className="flex flex-col gap-1.5 flex-1 min-w-0">
           <h3 className="text-base font-bold text-dark leading-snug">

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export function OTPForm() {
   const { t } = useTranslation();
@@ -67,12 +68,7 @@ export function OTPForm() {
       }
     } catch (error) {
       setError(t("validation.otpInvalid"));
-
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(t("validation.otpError"));
-      }
+      toast.error(getFriendlyErrorMessage(error, t, "validation.otpError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -88,11 +84,7 @@ export function OTPForm() {
         toast.success(t("validation.resendSuccess"));
       }
     } catch (error) {
-      if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(t("validation.resendError"));
-      }
+      toast.error(getFriendlyErrorMessage(error, t, "validation.resendError"));
     }
   };
 

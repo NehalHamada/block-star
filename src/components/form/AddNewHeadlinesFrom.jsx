@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { getHeadlineSchema } from "../../schema";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export const AddNewHeadlinesFrom = () => {
   const { t } = useTranslation();
@@ -80,7 +81,7 @@ export const AddNewHeadlinesFrom = () => {
       reset();
       navigate("/headlines");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getFriendlyErrorMessage(error, t));
     }
   };
 
@@ -92,7 +93,7 @@ export const AddNewHeadlinesFrom = () => {
       reset();
       navigate("/headlines");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getFriendlyErrorMessage(error, t));
     }
   };
 
@@ -117,7 +118,7 @@ export const AddNewHeadlinesFrom = () => {
         handleCreateHeadline(formData);
       }
     } catch (error) {
-      console.error("Error creating headline:", error);
+      // Handled silently
     }
   };
 

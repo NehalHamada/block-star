@@ -18,6 +18,7 @@ import authService from "../../api/services/authService.jsx";
 import { useTranslation } from "react-i18next";
 import { FaFacebook } from "react-icons/fa";
 import { startSocialLogin } from "../../utils/socialAuth.js";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export function RegisterForm() {
   const { t } = useTranslation();
@@ -66,10 +67,8 @@ export function RegisterForm() {
             errorArray.forEach((msg) => toast.error(msg));
           }
         });
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
       } else {
-        toast.error(t("validation.registerError"));
+        toast.error(getFriendlyErrorMessage(error, t, "validation.registerError"));
       }
     } finally {
       setIsSubmitting(false);
@@ -80,7 +79,7 @@ export function RegisterForm() {
     try {
       await startSocialLogin("/auth/google/redirect");
     } catch (error) {
-      console.error("Google login error:", error);
+      // Handled silently
     }
   };
 
@@ -88,7 +87,7 @@ export function RegisterForm() {
     try {
       await startSocialLogin("/auth/facebook/redirect");
     } catch (error) {
-      console.error("Facebook login error:", error);
+      // Handled silently
     }
   };
 

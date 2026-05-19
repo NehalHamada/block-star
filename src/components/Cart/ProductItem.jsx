@@ -3,6 +3,7 @@ import { ChevronDown, Trash } from "lucide-react";
 import { useCartMutations } from "../../hooks/queries/useCart.js";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { ImageWithFallback } from "../ui/ImageWithFallback.jsx";
 
 export const ProductItem = ({ item }) => {
   const { t } = useTranslation();
@@ -42,33 +43,11 @@ export const ProductItem = ({ item }) => {
       {/* Product Info Section */}
       <div className="flex items-start gap-3 sm:gap-4 flex-1 w-full sm:w-auto">
         {/* Product Image or Premium Fallback */}
-        {resolvedImage ? (
-          <img
-            src={resolvedImage}
-            className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg object-cover flex-shrink-0"
-            alt={name}
-          />
-        ) : (
-          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg bg-secondary/5 border border-secondary/15 flex flex-col items-center justify-center gap-2 flex-shrink-0 text-secondary">
-            <svg
-              className="w-7 h-7 sm:w-9 sm:h-9 opacity-85"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-              />
-            </svg>
-            <span className="text-[10px] sm:text-xs font-semibold font-cairo opacity-90 px-1 text-center truncate w-full">
-              {name}
-            </span>
-          </div>
-        )}
+        <ImageWithFallback
+          src={resolvedImage}
+          className="w-24 h-24 sm:w-32 sm:h-32 rounded-lg object-cover flex-shrink-0"
+          alt={name}
+        />
 
         {/* Product Details */}
         <div className="flex flex-col gap-2 flex-1 min-w-0">

@@ -34,3 +34,4 @@ export * from "./ScrollToTop";
 export * from "./OfflineBanner";
 export * from "./ThumbsSwiper";
 export * from "./MapIframe";
+export * from "./ScrollToggleButton";

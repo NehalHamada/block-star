@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useTranslation } from "react-i18next";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export function ForgotPasswordForm() {
   const { t } = useTranslation();
@@ -44,8 +45,6 @@ export function ForgotPasswordForm() {
         state: { type: "forgot-password", email: data.email },
       });
     } catch (error) {
-      console.error("Forgot password error:", error);
-
       // Handle validation errors
       if (error.response?.data?.errors) {
         const errors = error.response.data.errors;
@@ -54,10 +53,8 @@ export function ForgotPasswordForm() {
             errorArray.forEach((msg) => toast.error(msg));
           }
         });
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
       } else {
-        toast.error(t("validation.otpError"));
+        toast.error(getFriendlyErrorMessage(error, t, "validation.otpError"));
       }
     } finally {
       setIsSubmitting(false);

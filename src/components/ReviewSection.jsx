@@ -84,6 +84,19 @@ export const ReviewSection = ({ reviews = [] }) => {
 
 const ReviewCard = ({ review }) => {
   const { t } = useTranslation();
+
+  const getImageUrl = (path) => {
+    if (!path) return "";
+    if (path.startsWith("http://") || path.startsWith("https://")) {
+      return path;
+    }
+    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+    return `https://wooden.ahdafweb.com/public/${cleanPath}`;
+  };
+
+  const reviewImage = review.image || review.image_path || review.image_url || review.review_image;
+  const imageUrl = getImageUrl(reviewImage);
+
   return (
     <div className="bg-primary/5 rounded-2xl mx-auto max-w-3xl relative flex flex-col md:flex-row items-stretch gap-6 p-6 md:p-8 shadow-lg my-5">
       {/* Content Section */}
@@ -120,13 +133,16 @@ const ReviewCard = ({ review }) => {
       </div>
 
       {/* Image Section - Only show if image exists */}
-      {review.image && (
+      {imageUrl && (
         <div className="flex items-center justify-center md:justify-end">
           <div className="relative group overflow-hidden rounded-2xl w-[180px] h-[180px] md:w-[200px] md:h-[200px] flex-shrink-0 shadow-md">
             <img
-              src={review.image}
+              src={imageUrl}
               alt={review.user_name || review.name || t("reviews.customer")}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
             />
           </div>
         </div>

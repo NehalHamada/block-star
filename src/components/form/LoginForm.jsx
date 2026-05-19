@@ -12,6 +12,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { FaFacebook } from "react-icons/fa";
 import { startSocialLogin } from "../../utils/socialAuth.js";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export function LoginForm() {
   const { t, i18n } = useTranslation();
@@ -62,10 +63,8 @@ export function LoginForm() {
             errorArray.forEach((msg) => toast.error(msg));
           }
         });
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
       } else {
-        toast.error(t("validation.loginError"));
+        toast.error(getFriendlyErrorMessage(error, t, "validation.loginError"));
       }
     } finally {
       setIsSubmitting(false);
@@ -76,7 +75,7 @@ export function LoginForm() {
     try {
       await startSocialLogin("/auth/google/redirect");
     } catch (error) {
-      console.error("Google login error:", error);
+      // Handled silently
     }
   };
 
@@ -84,7 +83,7 @@ export function LoginForm() {
     try {
       await startSocialLogin("/auth/facebook/redirect");
     } catch (error) {
-      console.error("Facebook login error:", error);
+      // Handled silently
     }
   };
   return (

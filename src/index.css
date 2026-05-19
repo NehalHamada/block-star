@@ -244,3 +244,20 @@
 .custom-tracking-steps .ant-steps-item-wait .ant-steps-item-title {
   color: var(--color-light-gray);
 }
+
+/* Global Button Cursor Pointer Style */
+button,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"]:disabled,
+button[disabled],
+[role="button"][disabled] {
+  cursor: not-allowed !important;
+}
+

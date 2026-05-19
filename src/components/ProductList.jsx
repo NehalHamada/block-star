@@ -7,9 +7,11 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
+import { EmptyState } from "./ui/EmptyState";
+
 import "swiper/css";
 
-export function ProductList({ products = [] }) {
+export function ProductList({ products = [], onResetFilters }) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
   const swiperRef = useRef(null);
@@ -17,9 +19,10 @@ export function ProductList({ products = [] }) {
 
   if (!products || products.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto py-10 px-4 text-center">
-        <p className="text-dark-gray">{t("products.noProductsAvailable")}</p>
-      </div>
+      <EmptyState
+        title={t("products.noProductsAvailable")}
+        onResetFilters={onResetFilters}
+      />
     );
   }
 

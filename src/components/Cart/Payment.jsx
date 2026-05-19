@@ -180,6 +180,8 @@ export const Payment = () => {
   );
 };
 
+import { ImageWithFallback } from "../ui/ImageWithFallback.jsx";
+
 const PaymentProductCard = ({ item }) => {
   const { t } = useTranslation();
   const { name, main_image, price, original_price, has_discount, size } = item;
@@ -192,7 +194,7 @@ const PaymentProductCard = ({ item }) => {
         whileHover={{ scale: 1.05 }}
         transition={{ duration: 0.3 }}
       >
-        <img
+        <ImageWithFallback
           src={main_image}
           alt={name}
           className="w-full h-full object-cover"

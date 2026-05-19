@@ -1,1 +1,2 @@
-export * from "./SuccessModal.jsx";
+export * from "./SuccessModal";
+export * from "./ConfirmModal";

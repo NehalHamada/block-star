@@ -20,6 +20,7 @@ import {
 } from "../hooks/queries/useHome";
 import { useTranslation } from "react-i18next";
 import { useRef } from "react";
+import { useRequireAuth, useDocumentMetadata } from "../hooks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import "swiper/css";
@@ -31,6 +32,7 @@ const cleanApiText = (value) => value?.replace(/[[\]]/g, "").trim();
 export function Home() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { requireAuth } = useRequireAuth();
   const isRTL = i18n.language === "ar";
   const { data: homeData } = useHomeData();
   const { data: latestCategories } = useLatestCategories();
@@ -39,6 +41,11 @@ export function Home() {
   const { data: offersProducts } = useOffersProducts();
   const { data: homeCard } = useHomeCard();
   const { data: companyCard } = useCompanyCard();
+
+  useDocumentMetadata(
+    t("common.home", "الرئيسية"),
+    homeData?.data?.main_description || "بلوك ستار هو وجهتك للحصول على ألواح خشبية مخصصة فاخرة وتصاميم إبداعية."
+  );
 
   // ── Hero Slider ──────────────────────────────────────────────
   const mediaItems = homeData?.data?.media ?? [];
@@ -119,7 +126,7 @@ export function Home() {
             <Button
               variant="secondary"
               className="px-8 py-3 rounded-md"
-              onClick={() => navigate("/studio")}>
+              onClick={() => requireAuth(() => navigate("/studio"))}>
               {t("home.heroBtn2")}
             </Button>
           </div>
@@ -292,7 +299,7 @@ export function Home() {
                 <Button
                   variant="secondary"
                   className="  px-8 py-3 rounded-md "
-                  onClick={() => navigate("/studio")}>
+                  onClick={() => requireAuth(() => navigate("/studio"))}>
                   {t("studio.designWithAI")}
                 </Button>
               </div>

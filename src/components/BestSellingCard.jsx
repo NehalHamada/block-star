@@ -1,6 +1,8 @@
 import React from "react";
 import { Star, ShoppingCart } from "lucide-react";
+import { motion } from "framer-motion";
 import { cardItem, hoverScale, tapScale } from "../utils/animations.js";
+import { ImageWithFallback } from "./ui/ImageWithFallback.jsx";
 
 export const BestSellingCard = React.memo(function BestSellingCard({
   product,
@@ -24,7 +26,7 @@ export const BestSellingCard = React.memo(function BestSellingCard({
           </div>
         )}
 
-        <img src={product.image} alt={product.title} loading="lazy" />
+        <ImageWithFallback src={product.image} alt={product.title} loading="lazy" />
       </div>
 
       <div className="p-2 space-y-3 flex flex-col">

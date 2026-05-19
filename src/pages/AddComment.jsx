@@ -35,7 +35,8 @@ export const AddComment = () => {
   const reviewMutation = useMutation({
     mutationFn: addReview,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products", productId] });
+      queryClient.invalidateQueries({ queryKey: ["product", productId] });
+      queryClient.invalidateQueries({ queryKey: ["product", String(productId)] });
       toast.success(t("reviews.reviewSuccess"));
       navigate(-1);
     },
@@ -74,13 +75,16 @@ export const AddComment = () => {
       formData.append("product_id", productId);
       formData.append("rating", data.rating);
       formData.append("comment", data.comment);
+      if (data.name) {
+        formData.append("name", data.name);
+      }
       if (data.image) {
         formData.append("image", data.image);
       }
 
       await reviewMutation.mutateAsync(formData);
     } catch (error) {
-      console.log(error);
+      // Error handled by mutation
     }
   };
 

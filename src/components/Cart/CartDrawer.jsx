@@ -7,6 +7,8 @@ import { useCart, useCartMutations } from "../../hooks/queries/useCart.js";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
+import { ImageWithFallback } from "../ui/ImageWithFallback.jsx";
+
 export function CartDrawer() {
   const { isOpen, closeDrawer } = useContext(CartDrawerContext);
   const { data } = useCart();
@@ -94,30 +96,11 @@ export function CartDrawer() {
                       className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
                     >
                       {/* Image or premium fallback */}
-                      {resolvedImage ? (
-                        <img
-                          src={resolvedImage}
-                          alt={item.name}
-                          className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
-                        />
-                      ) : (
-                        <div className="w-16 h-16 rounded-lg bg-secondary/5 border border-secondary/15 flex flex-col items-center justify-center flex-shrink-0 text-secondary">
-                          <svg
-                            className="w-5 h-5 opacity-80"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1.5}
-                              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                            />
-                          </svg>
-                        </div>
-                      )}
+                      <ImageWithFallback
+                        src={resolvedImage}
+                        alt={item.name}
+                        className="w-16 h-16 rounded-lg object-cover flex-shrink-0"
+                      />
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">

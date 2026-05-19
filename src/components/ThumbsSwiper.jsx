@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs, EffectFade, Autoplay } from "swiper/modules";
+import { ImageWithFallback } from "./ui/ImageWithFallback.jsx";
 
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -41,7 +42,7 @@ export const ThumbsSwiper = ({ images }) => {
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <img
+              <ImageWithFallback
                 src={image.image_path}
                 alt={`product-${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
@@ -74,7 +75,7 @@ export const ThumbsSwiper = ({ images }) => {
               className="rounded-xl overflow-hidden cursor-pointer opacity-50 grayscale-[30%] transition-all duration-300 hover:opacity-80"
               style={{ height: "80px" }}
             >
-              <img
+              <ImageWithFallback
                 src={image.image_path}
                 alt={`thumb-${index + 1}`}
                 className="w-full h-full object-cover"

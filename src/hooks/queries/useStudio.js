@@ -24,7 +24,6 @@ const useStudio = () => {
       toast.success(i18n.t("studio.successMsg"));
     },
     onError: (error) => {
-      console.error("Design approval error:", error);
       toast.error(i18n.t("studio.errorMsg"));
     },
   });

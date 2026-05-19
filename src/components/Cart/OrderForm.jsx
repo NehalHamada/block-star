@@ -18,6 +18,7 @@ import { FormSelect } from "../DesignImage/FormSelect.jsx";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export const OrderForm = ({ onShippingCostChange }) => {
   const { t } = useTranslation();
@@ -148,7 +149,7 @@ export const OrderForm = ({ onShippingCostChange }) => {
         }
       },
       onError: (error) => {
-        toast.error(error?.response?.data?.message || t("studio.errorMsg"));
+        toast.error(getFriendlyErrorMessage(error, t));
       },
     });
   };

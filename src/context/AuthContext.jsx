@@ -23,7 +23,7 @@ export default function AuthContextProvider({ children }) {
         setUserData(response.data?.user);
       })
       .catch((error) => {
-        console.error("Failed to fetch user data after login:", error);
+        // Silent catch
       });
   }, []);
 
@@ -34,7 +34,6 @@ export default function AuthContextProvider({ children }) {
     const urlToken = params.get("token") || params.get("access_token") || params.get("user_token");
     
     if (urlToken) {
-      console.log("Token detected in URL, logging in...");
       login(urlToken);
       
       // Clean up URL without reload to keep it clean for the user

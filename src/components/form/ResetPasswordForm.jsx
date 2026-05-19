@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
 export function ResetPasswordForm() {
   const { t } = useTranslation();
@@ -65,10 +66,8 @@ export function ResetPasswordForm() {
             errorArray.forEach((msg) => toast.error(msg));
           }
         });
-      } else if (error.response?.data?.message) {
-        toast.error(error.response.data.message);
       } else {
-        toast.error(t("validation.resetError"));
+        toast.error(getFriendlyErrorMessage(error, t, "validation.resetError"));
       }
     } finally {
       setIsSubmitting(false);

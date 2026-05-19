@@ -26,10 +26,14 @@ export function CompanyOrderForm({ handleSuccess, services }) {
     mode: "onChange",
   });
 
-  const serviceOptions = services?.map((service) => ({
-    label: service.title,
-    value: service.title,
-  }));
+  const serviceOptions = React.useMemo(() => {
+    if (!services) return [];
+    const titles = services.map((s) => s.title).filter(Boolean);
+    return Array.from(new Set(titles)).map((title) => ({
+      label: title,
+      value: title,
+    }));
+  }, [services]);
 
   const onSubmit = (data) => {
     // Map form field names to API field names
