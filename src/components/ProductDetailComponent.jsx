@@ -8,11 +8,14 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { ThumbsSwiper } from "./ThumbsSwiper.jsx";
 import { useState } from "react";
+import { PdfModal } from "./modal";
+import { FileText } from "lucide-react";
 
 export const ProductDetailComponent = ({ product, counter, setCounter }) => {
   const { addToCart } = useCartMutations();
   const { t } = useTranslation();
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isPdfOpen, setIsPdfOpen] = useState(false);
 
   const handleAddToCart = () => {
     // RATIONALE: Pass selectedColor.id as productColorId to cart mutation if available
@@ -128,6 +131,19 @@ export const ProductDetailComponent = ({ product, counter, setCounter }) => {
             <TbPencilDiscount />
             {t("product.designNow")}
           </Button>
+
+          {/* PDF Catalog Button */}
+          {product.file && product.file.length > 0 && product.file[0]?.file_path && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsPdfOpen(true)}
+              className="w-full flex items-center justify-center gap-2 border-dashed border-2 border-secondary text-secondary hover:bg-secondary/5 font-cairo"
+            >
+              <FileText size={18} />
+              {t("product.viewCatalog")}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -191,6 +207,15 @@ export const ProductDetailComponent = ({ product, counter, setCounter }) => {
           </div>
         )}
       </div>
+      {/* PDF Catalog Modal */}
+      {product.file && product.file.length > 0 && product.file[0]?.file_path && (
+        <PdfModal
+          isOpen={isPdfOpen}
+          onClose={() => setIsPdfOpen(false)}
+          pdfUrl={product.file[0].file_path}
+          title={product.name}
+        />
+      )}
     </div>
   );
 };

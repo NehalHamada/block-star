@@ -16,7 +16,6 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import authService from "../../api/services/authService.jsx";
 import { useTranslation } from "react-i18next";
-import { FaFacebook } from "react-icons/fa";
 import { startSocialLogin } from "../../utils/socialAuth.js";
 import { getFriendlyErrorMessage } from "../../utils/errors.js";
 
@@ -83,13 +82,7 @@ export function RegisterForm() {
     }
   };
 
-  const handleFacebookLogin = async () => {
-    try {
-      await startSocialLogin("/auth/facebook/redirect");
-    } catch (error) {
-      // Handled silently
-    }
-  };
+
 
   return (
     <div className=" w-full">
@@ -108,15 +101,7 @@ export function RegisterForm() {
         >
           {t("auth.googleLogin")}
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleFacebookLogin}
-          className="w-full "
-          icon={<FaFacebook color="#1877F2" size={25} />}
-        >
-          {t("auth.facebookLogin")}
-        </Button>
+
 
         {/* Divider */}
         <Divider text={t("auth.or")} />

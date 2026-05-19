@@ -274,7 +274,9 @@
     "bestSelling": "الأكثر مبيعاً",
     "noUsageIdeas": "لا توجد أفكار استخدام متاحة حالياً",
     "galleryImage": "معرض الصور",
-    "availableColors": "الألوان المتاحة"
+    "availableColors": "الألوان المتاحة",
+    "viewCatalog": "عرض الكتالوج (PDF)",
+    "catalog": "الكتالوج"
   },
   "offers": {
     "title": "العروض"
@@ -588,7 +590,8 @@
     "currency": "ر.س",
     "address": "العنوان",
     "previous": "السابق",
-    "next": "التالي"
+    "next": "التالي",
+    "download": "تحميل"
   },
   "auth": {
     "loginRequired": "يجب تسجيل الدخول أولاً للقيام بهذا الإجراء.",

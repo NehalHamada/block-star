@@ -27,7 +27,7 @@ Block Star is a premium e-commerce platform specializing in custom wooden frames
   - **Address Management**: Users can save multiple shipping addresses (Headlines) with an easy-to-use dropdown system.
 
 ### 3. Authentication & Security
-- **Social Login**: Seamless integration with Google and Facebook.
+- **Social Login**: Seamless integration with Google.
 - **Automatic Token Handling**: Environment-agnostic token consumption from URLs to ensure a smooth login flow regardless of the redirect environment (Localhost/Production).
 - **Secure API**: Custom Axios instance with request interceptors for token management and dynamic `Accept-Language` headers.
 
@@ -35,6 +35,10 @@ Block Star is a premium e-commerce platform specializing in custom wooden frames
 - **Multi-language Support**: Fully localized in Arabic and English.
 - **Responsive Design**: Mobile-first approach ensuring a premium experience on all devices.
 - **RTL Support**: Optimized layout for Arabic users.
+
+### 5. Product Catalog (PDF)
+- **Interactive PDF Catalog**: Allows users to view product catalogs (PDF files) directly on the website via a fully-responsive, smooth popup modal (`PdfModal`).
+- **One-click Download**: Provides a direct download option for offline viewing.
 
 ##  Project Structure
 

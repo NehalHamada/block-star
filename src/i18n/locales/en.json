@@ -275,7 +275,9 @@
     "readyToOrder": "Ready to Order",
     "noUsageIdeas": "No usage ideas available at the moment",
     "galleryImage": "Gallery Image",
-    "availableColors": "Available Colors"
+    "availableColors": "Available Colors",
+    "viewCatalog": "View Catalog (PDF)",
+    "catalog": "Catalog"
   },
   "offers": {
     "title": "Offers"
@@ -589,7 +591,8 @@
     "currency": "SAR",
     "address": "Address",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "download": "Download"
   },
   "auth": {
     "loginRequired": "You must log in first to perform this action.",
