@@ -32,7 +32,7 @@ const cleanApiText = (value) => value?.replace(/[[\]]/g, "").trim();
 export function Home() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { requireAuth } = useRequireAuth();
+  const { requireAuth, isAuthenticated } = useRequireAuth();
   const isRTL = i18n.language === "ar";
   const { data: homeData } = useHomeData();
   const { data: latestCategories } = useLatestCategories();
@@ -126,7 +126,13 @@ export function Home() {
             <Button
               variant="secondary"
               className="px-8 py-3 rounded-md"
-              onClick={() => requireAuth(() => navigate("/studio"))}>
+              onClick={() => {
+                if (isAuthenticated) {
+                  navigate("/studio");
+                } else {
+                  navigate("/auth/login");
+                }
+              }}>
               {t("home.heroBtn2")}
             </Button>
           </div>

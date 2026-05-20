@@ -147,8 +147,12 @@ const [editOpen, setEditOpen] = useState(false);
     exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
   };
 
+  // RATIONALE: Keep opacity at 1 for child items so they do not render completely invisible (opacity: 0) 
+  // if the parent's animation propagation is out-of-sync or intercepted by AnimatePresence. 
+  // The parent container (cardVariants) already provides a beautiful global fade-in and slide-up transition, 
+  // so the cards will still fade in perfectly as part of the overall page entry.
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 1, scale: 0.98 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
   };
 
@@ -257,13 +261,16 @@ const [editOpen, setEditOpen] = useState(false);
               <AnimatePresence>
                 {generatedOptions.map((option, index) => {
                   const isSelected = selectedOptionIndex === index;
+                  // RATIONALE: Using specific transition-colors and transition-shadow instead of transition-all. 
+                  // transition-all conflicts with Framer Motion's inline opacity/transform style updates, causing the cards 
+                  // to render invisible (opacity: 0) on load until an event like hover forces a repaint/reflow.
                   return (
                     <motion.div
                       key={option.board.id}
                       variants={itemVariants}
                       whileHover={{ y: -4 }}
                       onClick={() => setSelectedOptionIndex(index)}
-                      className={`relative cursor-pointer rounded-2xl overflow-hidden bg-white border-2 transition-all duration-300 shadow-sm hover:shadow-lg ${
+                      className={`relative cursor-pointer rounded-2xl overflow-hidden bg-white border-2 transition-colors transition-shadow duration-300 shadow-sm hover:shadow-lg ${
                         isSelected
                           ? "border-primary ring-4 ring-primary/20 shadow-primary/10"
                           : "border-gray-200 hover:border-gray-300"
