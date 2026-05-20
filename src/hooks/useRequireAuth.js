@@ -1,5 +1,5 @@
 import { useAuth } from "./useAuth";
-import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 /**
@@ -10,15 +10,19 @@ import { toast } from "react-toastify";
  */
 export const useRequireAuth = () => {
   const { isAuthenticated } = useAuth();
-  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const requireAuth = (callback) => {
     if (!isAuthenticated) {
-      toast.warning(t("auth.loginRequired", "يجب تسجيل الدخول أولاً للقيام بهذا الإجراء."), {
+      // Show a toast notifying the user that login is required
+      toast.warning("يجب تسجيل الدخول أولاً للقيام بهذا الإجراء.", {
         toastId: "auth-required",
       });
+      // Redirect to login page
+      navigate("/auth/login", { replace: true });
       return;
     }
+    // If authenticated, execute the provided callback
     callback?.();
   };
 

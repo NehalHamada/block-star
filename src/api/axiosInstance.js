@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://wooden.ahdafweb.com/public/api",
+  baseURL: "https://ahdafweb.com/WoodenApi/public/api/",
 });
 
 // Request Interceptor — attaches token when user is logged in

@@ -34,12 +34,25 @@ function ImageWithLoader({ src, alt, className, isAr }) {
       {hasError ? (
         <div className="flex flex-col items-center justify-center text-center gap-3 w-full h-full">
           <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-500">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
             </svg>
           </div>
           <p className="text-xs font-semibold text-red-600 font-cairo">
-            {isAr ? "فشل تحميل لوحة الذكاء الاصطناعي" : "AI board failed to load"}
+            {isAr
+              ? "فشل تحميل لوحة الذكاء الاصطناعي"
+              : "AI board failed to load"}
           </p>
           <a
             href={src}
@@ -83,7 +96,7 @@ function ImageWithLoader({ src, alt, className, isAr }) {
  */
 export function DesignPageByAI({ onStepChange }) {
   const { t, i18n } = useTranslation();
-    // Obtain UI state and actions from the custom hook
+  // Obtain UI state and actions from the custom hook
   const {
     step,
     prompt,
@@ -106,11 +119,10 @@ export function DesignPageByAI({ onStepChange }) {
     isPendingGenerate,
   } = useDesignPageByAI(onStepChange);
 
-
-    const isAr = i18n.language === "ar";
+  const isAr = i18n.language === "ar";
 
   const { translatePrompt } = usePollinationsAI();
-const [editOpen, setEditOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   // Creative pre-filled prompt suggestions for wooden designs
   const SUGGESTIONS = [
@@ -147,9 +159,9 @@ const [editOpen, setEditOpen] = useState(false);
     exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
   };
 
-  // RATIONALE: Keep opacity at 1 for child items so they do not render completely invisible (opacity: 0) 
-  // if the parent's animation propagation is out-of-sync or intercepted by AnimatePresence. 
-  // The parent container (cardVariants) already provides a beautiful global fade-in and slide-up transition, 
+  // RATIONALE: Keep opacity at 1 for child items so they do not render completely invisible (opacity: 0)
+  // if the parent's animation propagation is out-of-sync or intercepted by AnimatePresence.
+  // The parent container (cardVariants) already provides a beautiful global fade-in and slide-up transition,
   // so the cards will still fade in perfectly as part of the overall page entry.
   const itemVariants = {
     hidden: { opacity: 1, scale: 0.98 },
@@ -261,8 +273,8 @@ const [editOpen, setEditOpen] = useState(false);
               <AnimatePresence>
                 {generatedOptions.map((option, index) => {
                   const isSelected = selectedOptionIndex === index;
-                  // RATIONALE: Using specific transition-colors and transition-shadow instead of transition-all. 
-                  // transition-all conflicts with Framer Motion's inline opacity/transform style updates, causing the cards 
+                  // RATIONALE: Using specific transition-colors and transition-shadow instead of transition-all.
+                  // transition-all conflicts with Framer Motion's inline opacity/transform style updates, causing the cards
                   // to render invisible (opacity: 0) on load until an event like hover forces a repaint/reflow.
                   return (
                     <motion.div
@@ -320,7 +332,7 @@ const [editOpen, setEditOpen] = useState(false);
           {/* Action Row */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button
-                onClick={() => setEditOpen(true)}
+              onClick={() => setEditOpen(true)}
               variant="outline"
               className="flex-1 font-cairo !rounded-xl !py-3 hover:bg-gray-50 transition-colors"
             >
@@ -347,14 +359,15 @@ const [editOpen, setEditOpen] = useState(false);
             </Button>
             <Button
               onClick={async () => {
-                const imgUrl = generatedOptions[selectedOptionIndex]?.board?.image_url;
+                const imgUrl =
+                  generatedOptions[selectedOptionIndex]?.board?.image_url;
                 if (imgUrl) {
                   try {
                     const response = await fetch(imgUrl);
                     const blob = await response.blob();
                     const localUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
+                    const a = document.createElement("a");
+                    a.style.display = "none";
                     a.href = localUrl;
                     a.download = `blockstar-design-${Date.now()}.png`;
                     document.body.appendChild(a);
@@ -369,21 +382,21 @@ const [editOpen, setEditOpen] = useState(false);
               variant="outline"
               className="flex-1 font-cairo !rounded-xl !py-3 hover:bg-gray-50 transition-colors"
             >
-              {t('studio.download', { defaultValue: 'Download' })}
+              {t("studio.download", { defaultValue: "Download" })}
             </Button>
-            </div>
-            {/* Edit Prompt Modal */}
-            <EditPromptModal
-              isOpen={editOpen}
-              currentPrompt={prompt}
-              onClose={() => setEditOpen(false)}
-              onSave={async (newPrompt) => {
-                const translated = await translatePrompt(newPrompt);
-                setPrompt(translated);
-                setEditOpen(false);
-                handleGenerate(translated);
-              }}
-            />
+          </div>
+          {/* Edit Prompt Modal */}
+          <EditPromptModal
+            isOpen={editOpen}
+            currentPrompt={prompt}
+            onClose={() => setEditOpen(false)}
+            onSave={async (newPrompt) => {
+              const translated = await translatePrompt(newPrompt);
+              setPrompt(translated);
+              setEditOpen(false);
+              handleGenerate(translated);
+            }}
+          />
         </motion.div>
       </div>
     );
@@ -453,7 +466,9 @@ const [editOpen, setEditOpen] = useState(false);
               className="w-full max-w-sm font-cairo !py-3.5 !rounded-2xl transition-all duration-300 text-base font-bold border border-primary text-primary hover:bg-primary/10 shadow-sm hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
               <Brush size={18} />
-              <span>{t("studio.backToDesign", { defaultValue: "Back to design" })}</span>
+              <span>
+                {t("studio.backToDesign", { defaultValue: "Back to design" })}
+              </span>
             </Button>
           </div>
         </motion.div>
@@ -617,14 +632,16 @@ const [editOpen, setEditOpen] = useState(false);
           </div>
 
           {/* Action Button */}
-                    {/* Action Buttons */}
+          {/* Action Buttons */}
           <div className="pt-4 border-t border-gray-100 flex justify-center gap-4 relative z-10">
             <Button
               onClick={handleBackToInput}
               variant="primary"
               className="flex-1 max-w-xs font-cairo !py-3.5 !rounded-2xl transition-all duration-300 text-base font-bold bg-primary text-white hover:bg-primary/95 shadow-md shadow-primary/20 hover:-translate-y-0.5"
             >
-              {isAr ? "العودة للورشة والتجربة مجدداً" : "Return to workshop & try again"}
+              {isAr
+                ? "العودة للورشة والتجربة مجدداً"
+                : "Return to workshop & try again"}
             </Button>
             <Button
               onClick={handleGenerate}
@@ -634,8 +651,6 @@ const [editOpen, setEditOpen] = useState(false);
               {isAr ? "إعادة المحاولة" : "Retry"}
             </Button>
           </div>
-
-          
         </motion.div>
       </div>
     );
