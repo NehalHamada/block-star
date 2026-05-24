@@ -72,4 +72,4 @@ Block Star is a premium e-commerce platform specializing in custom wooden frames
 
 ---
 *Developed with precision to deliver a premium wooden art experience.*
-*Developed by Saeed Ramadan for Ahdaf web company*
+*Developed by Ahdaf web company*
